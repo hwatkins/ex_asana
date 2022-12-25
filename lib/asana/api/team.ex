@@ -180,7 +180,7 @@ defmodule Asana.Api.Team do
     %{}
     |> method(:get)
     |> url("/users/#{user_gid}/teams")
-    |> add_param(:query, :"organization_gid", organization_gid)
+    |> add_param(:query, :"organization", organization_gid)
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
