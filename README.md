@@ -36,3 +36,7 @@ mix deps.get
 mix test
 mix format
 ```
+
+## License
+
+MIT. See `LICENSE`.
