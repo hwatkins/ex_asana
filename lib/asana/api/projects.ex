@@ -26,8 +26,8 @@ defmodule Asana.Api.Projects do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.ProjectArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_project(Asana.Connection.t(), Asana.Model.InlineObject7.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -72,8 +72,8 @@ defmodule Asana.Api.Projects do
   - opts (KeywordList): [optional] Optional parameters
   ## Returns
 
-  {:ok, Asana.Model.ProjectStatusObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectStatusObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_project_status(
           Asana.Connection.t(),
@@ -119,8 +119,8 @@ defmodule Asana.Api.Projects do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.ProjectObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_projects_in_workspace(
           Asana.Connection.t(),
@@ -175,8 +175,8 @@ defmodule Asana.Api.Projects do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.ProjectObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_projects_with_team(
           Asana.Connection.t(),
@@ -230,8 +230,8 @@ defmodule Asana.Api.Projects do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec delete_project(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.EmptyObject.t()}
@@ -274,8 +274,8 @@ defmodule Asana.Api.Projects do
   - opts (KeywordList): [optional] Optional parameters
   ## Returns
 
-  {:ok, Asana.Model.ProjectStatusArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectStatusArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_product_statuses(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -314,8 +314,8 @@ defmodule Asana.Api.Projects do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.ProjectObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_project(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -363,8 +363,8 @@ defmodule Asana.Api.Projects do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_project_tasks(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -414,8 +414,8 @@ defmodule Asana.Api.Projects do
     - :archived (boolean()): Only return projects whose `archived` field takes on the value of this parameter.
   ## Returns
 
-  {:ok, Asana.Model.ProjectArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_projects(Asana.Connection.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -467,8 +467,8 @@ defmodule Asana.Api.Projects do
     - :archived (boolean()): Only return projects whose `archived` field takes on the value of this parameter.
   ## Returns
 
-  {:ok, Asana.Model.ProjectArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_projects_in_team(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -518,8 +518,8 @@ defmodule Asana.Api.Projects do
     - :archived (boolean()): Only return projects whose `archived` field takes on the value of this parameter.
   ## Returns
 
-  {:ok, Asana.Model.ProjectArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_projects_in_workspace(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -568,8 +568,8 @@ defmodule Asana.Api.Projects do
     - :opt_pretty (boolean()): Provides the response in “pretty” output. In the case of JSON this means doing proper line breaking and indentation to make it readable. This will take extra time and increase the response size so it is advisable only to use this during debugging.
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec project_add_custom_field_setting(Asana.Connection.t(), String.t(), integer(), keyword()) ::
           {:ok, Asana.Model.EmptyObject.t()}
@@ -615,8 +615,8 @@ defmodule Asana.Api.Projects do
     - :opt_pretty (boolean()): Provides the response in “pretty” output. In the case of JSON this means doing proper line breaking and indentation to make it readable. This will take extra time and increase the response size so it is advisable only to use this during debugging.
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec project_remove_custom_field_setting(
           Asana.Connection.t(),
@@ -668,8 +668,8 @@ defmodule Asana.Api.Projects do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.ProjectObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec update_project(Asana.Connection.t(), String.t(), Asana.Model.ProjectObject.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}

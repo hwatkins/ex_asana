@@ -26,8 +26,8 @@ defmodule Asana.Api.Attachments do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.AttachmentObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.AttachmentObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_attachment(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.AttachmentObject.t()}
@@ -75,8 +75,8 @@ defmodule Asana.Api.Attachments do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.AttachmentArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.AttachmentArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_attachments_for_task(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -125,8 +125,8 @@ defmodule Asana.Api.Attachments do
     - :file (String.t): 
   ## Returns
 
-  {:ok, Asana.Model.AttachmentObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.AttachmentObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec upload_attachment_to_task(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.AttachmentObject.t()}

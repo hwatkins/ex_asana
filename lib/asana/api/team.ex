@@ -27,8 +27,8 @@ defmodule Asana.Api.Team do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.UserArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.UserArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec add_user_to_team(Asana.Connection.t(), integer(), Asana.Model.UserIdObject.t(), keyword()) ::
           {:ok, Asana.Model.UserArray.t()}
@@ -77,8 +77,8 @@ defmodule Asana.Api.Team do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TeamArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TeamArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_all_teams(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.TeamArray.t()}
@@ -126,8 +126,8 @@ defmodule Asana.Api.Team do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TeamObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TeamObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_team(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -176,8 +176,8 @@ defmodule Asana.Api.Team do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TeamArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TeamArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_teams_for_user(
           Asana.Connection.t(),
@@ -231,8 +231,8 @@ defmodule Asana.Api.Team do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.UserArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.UserArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_users_for_team(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.UserArray.t()}
@@ -281,8 +281,8 @@ defmodule Asana.Api.Team do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.UserArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.UserArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec remove_user_from_team(
           Asana.Connection.t(),

@@ -22,8 +22,8 @@ defmodule Asana.Api.ProjectStatuses do
   - opts (KeywordList): [optional] Optional parameters
   ## Returns
 
-  {:ok, Asana.Model.ProjectStatusObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectStatusObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_project_status(
           Asana.Connection.t(),
@@ -64,8 +64,8 @@ defmodule Asana.Api.ProjectStatuses do
   - opts (KeywordList): [optional] Optional parameters
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec delete_product_status(Asana.Connection.t(), integer(), integer(), keyword()) ::
           {:ok, Asana.Model.EmptyObject.t()}
@@ -100,8 +100,8 @@ defmodule Asana.Api.ProjectStatuses do
   - opts (KeywordList): [optional] Optional parameters
   ## Returns
 
-  {:ok, Asana.Model.ProjectStatusObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectStatusObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_product_status(Asana.Connection.t(), integer(), integer(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -135,8 +135,8 @@ defmodule Asana.Api.ProjectStatuses do
   - opts (KeywordList): [optional] Optional parameters
   ## Returns
 
-  {:ok, Asana.Model.ProjectStatusArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectStatusArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_product_statuses(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.Error.t()}

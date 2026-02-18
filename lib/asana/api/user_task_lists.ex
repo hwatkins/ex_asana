@@ -26,8 +26,8 @@ defmodule Asana.Api.UserTaskLists do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.UserTaskListObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.UserTaskListObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_user_task_list(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -76,8 +76,8 @@ defmodule Asana.Api.UserTaskLists do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_user_task_list_tasks(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -126,8 +126,8 @@ defmodule Asana.Api.UserTaskLists do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.UserTaskListObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.UserTaskListObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_users_task_list(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}

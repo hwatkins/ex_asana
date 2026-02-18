@@ -26,8 +26,8 @@ defmodule Asana.Api.BatchAPI do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.InlineResponse200.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.InlineResponse200.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec batch_request(Asana.Connection.t(), Asana.Model.InlineObject.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}

@@ -35,7 +35,7 @@ defmodule Asana.MixProject do
   defp package do
     [
       name: "asana",
-      files: ~w(lib config mix.exs README* LICENSE*),
+      files: ~w(lib config mix.exs README*),
       licenses: [],
       links: %{"GitHub" => @source_url}
     ]

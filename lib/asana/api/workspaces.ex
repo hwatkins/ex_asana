@@ -27,8 +27,8 @@ defmodule Asana.Api.Workspaces do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.UserObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.UserObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec add_user_to_workspace(
           Asana.Connection.t(),
@@ -81,8 +81,8 @@ defmodule Asana.Api.Workspaces do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.WorkspaceArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.WorkspaceArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_all_workspaces(Asana.Connection.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -133,8 +133,8 @@ defmodule Asana.Api.Workspaces do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.AsanaObjectArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.AsanaObjectArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_typeahead(Asana.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.AsanaObjectArray.t()}
@@ -185,8 +185,8 @@ defmodule Asana.Api.Workspaces do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.WorkspaceObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.WorkspaceObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_workspace(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.WorkspaceObject.t()}
@@ -235,15 +235,15 @@ defmodule Asana.Api.Workspaces do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, map()} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, map()}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec remove_user_to_workspace(
           Asana.Connection.t(),
           String.t(),
           Asana.Model.UserIdObject.t(),
           keyword()
-        ) :: {:ok, Asana.Model.Error.t()} | {:ok, Map.t()} | {:error, Req.Response.t()}
+        ) :: {:ok, Asana.Model.Error.t()} | {:ok, map()} | {:error, Req.Response.t()}
   def remove_user_to_workspace(connection, workspace_gid, user_id_object, opts \\ []) do
     optional_params = %{
       :opt_pretty => :query,
@@ -288,8 +288,8 @@ defmodule Asana.Api.Workspaces do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.WorkspaceObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.WorkspaceObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec update_workspace(
           Asana.Connection.t(),

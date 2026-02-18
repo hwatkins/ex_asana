@@ -26,8 +26,8 @@ defmodule Asana.Api.Tags do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TagObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TagObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_tag(Asana.Connection.t(), Asana.Model.TagObject.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -77,8 +77,8 @@ defmodule Asana.Api.Tags do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TagArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TagArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_tag_in_workspace(
           Asana.Connection.t(),
@@ -132,8 +132,8 @@ defmodule Asana.Api.Tags do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TagObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TagObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_tag(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -181,8 +181,8 @@ defmodule Asana.Api.Tags do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_tag_tasks(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -230,8 +230,8 @@ defmodule Asana.Api.Tags do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TagArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TagArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec query_all_tags_in_workspace(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.TagArray.t()}
@@ -280,8 +280,8 @@ defmodule Asana.Api.Tags do
     - :archived (boolean()): Only return tags whose `archived` field takes on the value of this parameter.
   ## Returns
 
-  {:ok, Asana.Model.TagArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TagArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec query_tags(Asana.Connection.t(), keyword()) ::
           {:ok, Asana.Model.TagArray.t()}
@@ -331,8 +331,8 @@ defmodule Asana.Api.Tags do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TagObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TagObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec update_tag(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}

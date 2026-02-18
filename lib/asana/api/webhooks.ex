@@ -26,8 +26,8 @@ defmodule Asana.Api.Webhooks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.WebhookObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.WebhookObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_webhook(Asana.Connection.t(), Asana.Model.InlineObject18.t(), keyword()) ::
           {:ok, Asana.Model.WebhookObject.t()}
@@ -76,8 +76,8 @@ defmodule Asana.Api.Webhooks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec delete_webhook(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.EmptyObject.t()}
@@ -125,8 +125,8 @@ defmodule Asana.Api.Webhooks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.WebhookObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.WebhookObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_webhook(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.WebhookObject.t()}
@@ -175,8 +175,8 @@ defmodule Asana.Api.Webhooks do
     - :resource (integer()): Only return webhooks for the given resource.
   ## Returns
 
-  {:ok, Asana.Model.WebhookArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.WebhookArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_webhooks(Asana.Connection.t(), integer(), keyword()) ::
           {:ok, Asana.Model.Error.t()}

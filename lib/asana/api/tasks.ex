@@ -27,8 +27,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec add_follower_to_task(
           Asana.Connection.t(),
@@ -83,8 +83,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec add_project_to_task(
           Asana.Connection.t(),
@@ -139,8 +139,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec add_tag_to_task(
           Asana.Connection.t(),
@@ -195,8 +195,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec add_task_dependencies(
           Asana.Connection.t(),
@@ -251,8 +251,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec add_task_dependents(
           Asana.Connection.t(),
@@ -307,8 +307,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec change_subtask_parent(
           Asana.Connection.t(),
@@ -363,8 +363,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.StoryObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.StoryObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_comment_story(
           Asana.Connection.t(),
@@ -419,8 +419,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_subtask(Asana.Connection.t(), String.t(), Asana.Model.TaskObject.t(), keyword()) ::
           {:ok, Asana.Model.TaskObject.t()}
@@ -469,8 +469,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec create_task(Asana.Connection.t(), Asana.Model.TaskObject.t(), keyword()) ::
           {:ok, Asana.Model.TaskObject.t()}
@@ -519,8 +519,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec delete_task(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.EmptyObject.t()}
@@ -568,8 +568,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_project_tasks(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -617,8 +617,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_section_tasks(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -666,8 +666,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_sub_tasks(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -715,8 +715,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_tag_tasks(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -764,8 +764,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_task(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskObject.t()}
@@ -813,8 +813,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_task_dependencies(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -862,8 +862,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_task_dependents(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -911,8 +911,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.ProjectArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.ProjectArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_task_projects(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -960,8 +960,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.StoryArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.StoryArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_task_stories(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.Error.t()}
@@ -1009,8 +1009,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TagArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TagArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_task_tags(Asana.Connection.t(), String.t(), keyword()) ::
           {:ok, Asana.Model.TagArray.t()}
@@ -1044,7 +1044,7 @@ defmodule Asana.Api.Tasks do
 
   @doc """
   Query for tasks in a workspace
-  The search endpoint allows you to build complex queries to find and fetch exactly the data you need from Asana. For a more comprehensive description of all the query parameters and limitations of this endpoint, see our [long-form documentation](/developers/documentation/getting-started/search-api) for this feature.
+  The search endpoint allows you to build complex queries to find and fetch exactly the data you need from Asana. For a more comprehensive description of all the query parameters and limitations of this endpoint, see our [long-form documentation](https://developers.asana.com/docs/search-api) for this feature.
 
   ## Parameters
 
@@ -1059,8 +1059,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec get_workspace_tasks_search(Asana.Connection.t(), integer(), String.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -1113,8 +1113,8 @@ defmodule Asana.Api.Tasks do
     - :modified_since (OneOfDateTimestring): Only return tasks that have been modified since the given time.  **Note**: A task is considered “modified” if any of its properties change, or associations between it and other objects are modified (e.g.  a task being added to a project). A task is not considered modified just because another object it is associated with (e.g. a subtask) is modified. Actions that count as modifying the task include assigning, renaming, completing, and adding stories.
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec query_tasks(Asana.Connection.t(), keyword()) ::
           {:ok, Asana.Model.TaskArray.t()}
@@ -1169,8 +1169,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec remove_follower_to_task(
           Asana.Connection.t(),
@@ -1225,8 +1225,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec remove_project_from_task(
           Asana.Connection.t(),
@@ -1281,8 +1281,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.EmptyObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec remove_tag_from_task(
           Asana.Connection.t(),
@@ -1337,8 +1337,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec remove_task_dependencies(
           Asana.Connection.t(),
@@ -1393,8 +1393,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskArray.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec remove_task_dependents(
           Asana.Connection.t(),
@@ -1449,8 +1449,8 @@ defmodule Asana.Api.Tasks do
     - :offset (String.t): An offset to the next page returned by the API. A pagination request will return an offset token, which can be used as an input parameter to the next request. If an offset is not passed in, the API will return the first page of results. 'Note: You can only pass in an offset that was returned to you via a previously paginated request.'
   ## Returns
 
-  {:ok, Asana.Model.TaskObject.t} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, Asana.Model.TaskObject.t}` on success
+  - `{:error, Req.Response.t}` on failure
   """
   @spec update_task(Asana.Connection.t(), String.t(), Asana.Model.TaskObject.t(), keyword()) ::
           {:ok, Asana.Model.TaskObject.t()}
