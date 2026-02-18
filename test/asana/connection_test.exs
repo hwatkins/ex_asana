@@ -46,6 +46,26 @@ defmodule Asana.ConnectionTest do
     assert body["query"] == "limit=10"
   end
 
+  test "request/2 normalizes list query params for Req encoding" do
+    Req.Test.stub(:asana_query_stub, fn conn ->
+      Req.Test.json(conn, %{query: conn.query_string})
+    end)
+
+    connection =
+      Connection.new("token")
+      |> Req.merge(plug: {Req.Test, :asana_query_stub})
+
+    assert {:ok, %Req.Response{status: 200, body: body}} =
+             Connection.request(
+               connection,
+               method: :get,
+               url: "/tasks",
+               query: [opt_fields: ["gid", "name"], limit: 5]
+             )
+
+    assert body["query"] == "opt_fields=gid%2Cname&limit=5"
+  end
+
   test "request/2 encodes multipart payloads for file uploads" do
     Req.Test.stub(:asana_multipart_stub, fn conn ->
       {:ok, request_body, conn} = Plug.Conn.read_body(conn)

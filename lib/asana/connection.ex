@@ -69,7 +69,7 @@ defmodule Asana.Connection do
       request_options
       |> Keyword.put(:method, method)
       |> Keyword.put(:url, url)
-      |> maybe_put(:params, query)
+      |> maybe_put(:params, normalize_query_params(query))
       |> maybe_put(:headers, headers)
       |> maybe_put(:form, form)
       |> maybe_put_body(body, form, multipart)
@@ -81,6 +81,32 @@ defmodule Asana.Connection do
   defp maybe_put(options, _key, nil), do: options
   defp maybe_put(options, _key, []), do: options
   defp maybe_put(options, key, value), do: Keyword.put(options, key, value)
+
+  defp normalize_query_params(nil), do: nil
+  defp normalize_query_params([]), do: []
+
+  defp normalize_query_params(params) when is_list(params) do
+    Enum.map(params, fn {key, value} -> {key, normalize_query_value(value)} end)
+  end
+
+  defp normalize_query_params(params) when is_map(params) do
+    Map.new(params, fn {key, value} -> {key, normalize_query_value(value)} end)
+  end
+
+  defp normalize_query_params(params), do: params
+
+  defp normalize_query_value(value) when is_list(value) do
+    if List.ascii_printable?(value) do
+      to_string(value)
+    else
+      Enum.map_join(value, ",", &normalize_query_item/1)
+    end
+  end
+
+  defp normalize_query_value(value), do: value
+
+  defp normalize_query_item(item) when is_map(item) or is_list(item), do: Poison.encode!(item)
+  defp normalize_query_item(item), do: to_string(item)
 
   defp maybe_put_body(options, nil, _form, _multipart), do: options
   defp maybe_put_body(options, _body, form, _multipart) when not is_nil(form), do: options
