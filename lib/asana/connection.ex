@@ -72,8 +72,8 @@ defmodule Asana.Connection do
       |> maybe_put(:params, query)
       |> maybe_put(:headers, headers)
       |> maybe_put(:form, form)
-      |> maybe_put(:form_multipart, multipart)
       |> maybe_put_body(body, form, multipart)
+      |> maybe_encode_multipart(multipart, form)
 
     Req.request(connection, req_options)
   end
@@ -90,4 +90,131 @@ defmodule Asana.Connection do
     do: Keyword.put(options, :body, body)
 
   defp maybe_put_body(options, body, _form, _multipart), do: Keyword.put(options, :json, body)
+
+  defp maybe_encode_multipart(options, nil, _form), do: options
+  defp maybe_encode_multipart(options, [], _form), do: options
+
+  defp maybe_encode_multipart(options, multipart, form) when is_list(multipart) do
+    boundary = multipart_boundary()
+    multipart = multipart ++ multipart_form_fields(form)
+    body = encode_multipart_body(multipart, boundary)
+    content_type = "multipart/form-data; boundary=" <> boundary
+
+    options
+    |> Keyword.delete(:form)
+    |> Keyword.put(:body, body)
+    |> Keyword.put(
+      :headers,
+      put_or_replace_header(Keyword.get(options, :headers, []), "content-type", content_type)
+    )
+  end
+
+  defp multipart_form_fields(nil), do: []
+
+  defp multipart_form_fields(form) when is_map(form) do
+    Enum.map(form, fn {key, value} -> {to_string(key), encode_form_value(value)} end)
+  end
+
+  defp multipart_form_fields(form) when is_list(form) do
+    Enum.map(form, fn {key, value} -> {to_string(key), encode_form_value(value)} end)
+  end
+
+  defp encode_form_value(value) when is_binary(value), do: value
+  defp encode_form_value(value) when is_map(value) or is_list(value), do: Poison.encode!(value)
+  defp encode_form_value(value), do: to_string(value)
+
+  defp multipart_boundary do
+    "----asana-#{Base.encode16(:crypto.strong_rand_bytes(12), case: :lower)}"
+  end
+
+  defp encode_multipart_body(parts, boundary) do
+    [
+      Enum.map(parts, &encode_multipart_part(&1, boundary)),
+      "--",
+      boundary,
+      "--\r\n"
+    ]
+  end
+
+  defp encode_multipart_part({name, {:file, path}}, boundary) do
+    encode_multipart_part({name, {:file, path}, []}, boundary)
+  end
+
+  defp encode_multipart_part({name, {:file, path}, headers}, boundary) do
+    filename = Path.basename(path)
+    file_content = File.read!(path)
+
+    headers =
+      headers
+      |> normalize_headers()
+      |> put_new_header("content-type", "application/octet-stream")
+
+    [
+      "--",
+      boundary,
+      "\r\n",
+      "content-disposition: form-data; name=\"",
+      to_string(name),
+      "\"; filename=\"",
+      filename,
+      "\"\r\n",
+      encode_headers(headers),
+      "\r\n",
+      file_content,
+      "\r\n"
+    ]
+  end
+
+  defp encode_multipart_part({name, value}, boundary) do
+    encode_multipart_part({name, value, []}, boundary)
+  end
+
+  defp encode_multipart_part({name, value, headers}, boundary) do
+    [
+      "--",
+      boundary,
+      "\r\n",
+      "content-disposition: form-data; name=\"",
+      to_string(name),
+      "\"\r\n",
+      encode_headers(normalize_headers(headers)),
+      "\r\n",
+      encode_form_value(value),
+      "\r\n"
+    ]
+  end
+
+  defp encode_headers([]), do: []
+
+  defp encode_headers(headers) do
+    Enum.map(headers, fn {name, value} ->
+      [to_string(name), ": ", to_string(value), "\r\n"]
+    end)
+  end
+
+  defp normalize_headers(headers) when is_list(headers) do
+    Enum.map(headers, fn {name, value} -> {to_string(name), to_string(value)} end)
+  end
+
+  defp normalize_headers(_), do: []
+
+  defp put_new_header(headers, name, value) do
+    if Enum.any?(headers, fn {header_name, _} ->
+         String.downcase(header_name) == String.downcase(name)
+       end) do
+      headers
+    else
+      [{name, value} | headers]
+    end
+  end
+
+  defp put_or_replace_header(headers, name, value) do
+    filtered =
+      Enum.reject(headers, fn
+        {header_name, _} -> String.downcase(to_string(header_name)) == String.downcase(name)
+        _ -> false
+      end)
+
+    [{name, value} | filtered]
+  end
 end

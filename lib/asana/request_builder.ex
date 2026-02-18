@@ -44,8 +44,8 @@ defmodule Asana.RequestBuilder do
   def add_param(request, :body, :body, value), do: Map.put(request, :body, value)
 
   def add_param(request, :body, key, value) do
-    field = {to_string(key), Poison.encode!(value)}
-    Map.update(request, :form_multipart, [field], &(&1 ++ [field]))
+    field = {to_string(key), Poison.encode!(value), [{"content-type", "application/json"}]}
+    append_multipart_field(request, field)
   end
 
   def add_param(request, :headers, key, value) do
@@ -54,12 +54,17 @@ defmodule Asana.RequestBuilder do
   end
 
   def add_param(request, :file, name, path) do
-    field = {name, {:file, path}}
-    Map.update(request, :form_multipart, [field], &(&1 ++ [field]))
+    field = {to_string(name), {:file, path}}
+    append_multipart_field(request, field)
   end
 
   def add_param(request, :form, name, value) do
-    Map.update(request, :form, %{name => value}, &Map.put(&1, name, value))
+    if file_form_field?(name, value) do
+      field = {to_string(name), {:file, value}}
+      append_multipart_field(request, field)
+    else
+      Map.update(request, :form, %{name => value}, &Map.put(&1, name, value))
+    end
   end
 
   def add_param(request, location, key, value) do
@@ -126,4 +131,14 @@ defmodule Asana.RequestBuilder do
   end
 
   defp decode_body(body, _struct), do: {:error, {:unexpected_response_body, body}}
+
+  defp append_multipart_field(request, field) do
+    Map.update(request, :form_multipart, [field], &(&1 ++ [field]))
+  end
+
+  defp file_form_field?(name, value) when is_binary(value) do
+    String.downcase(to_string(name)) == "file"
+  end
+
+  defp file_form_field?(_, _), do: false
 end
