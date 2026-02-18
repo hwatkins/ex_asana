@@ -1,7 +1,7 @@
 defmodule Asana.MixProject do
   use Mix.Project
 
-  @version "1.0.0"
+  @version "0.5.0"
   @source_url "https://github.com/hwatkins/ex_asana"
 
   def project do

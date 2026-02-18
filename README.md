@@ -8,7 +8,7 @@ Add to `mix.exs`:
 
 ```elixir
 def deps do
-  [{:asana, "~> 1.0"}]
+  [{:asana, "~> 0.5"}]
 end
 ```
 
