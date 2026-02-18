@@ -4,17 +4,17 @@
 
 defmodule Asana.Model.AsanaCreatedAt do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"created_at"
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"created_at" => DateTime.t | nil
-  }
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.AsanaCreatedAt do
@@ -22,4 +22,3 @@ defimpl Poison.Decoder, for: Asana.Model.AsanaCreatedAt do
     value
   end
 end
-

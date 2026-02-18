@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.WorkspaceArray do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => [Asana.Model.Workspace.t] | nil
-  }
+          :data => [Asana.Model.Workspace.t()] | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.WorkspaceArray do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :list, Asana.Model.Workspace, options)
+    |> deserialize(:data, :list, Asana.Model.Workspace, options)
   end
 end
-

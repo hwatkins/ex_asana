@@ -10,7 +10,6 @@ defmodule Asana.Api.CustomFieldSettings do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Get a portfolio's custom fields
   Returns a list of all of the custom fields settings on a portfolio, in compact form.
@@ -28,17 +27,21 @@ defmodule Asana.Api.CustomFieldSettings do
   ## Returns
 
   {:ok, Asana.Model.CustomFieldSettingsArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_custom_field_settings_for_portfolio(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.CustomFieldSettingsArray.t} | {:error, Tesla.Env.t}
+  @spec get_custom_field_settings_for_portfolio(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.CustomFieldSettingsArray.t()}
+          | {:error, Req.Response.t()}
   def get_custom_field_settings_for_portfolio(connection, portfolio_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/portfolios/#{portfolio_gid}/custom_field_settings")
@@ -46,13 +49,13 @@ defmodule Asana.Api.CustomFieldSettings do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.CustomFieldSettingsArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.CustomFieldSettingsArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -73,17 +76,21 @@ defmodule Asana.Api.CustomFieldSettings do
   ## Returns
 
   {:ok, Asana.Model.CustomFieldSettingsArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_custom_field_settings_for_project(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.CustomFieldSettingsArray.t} | {:error, Tesla.Env.t}
+  @spec get_custom_field_settings_for_project(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.CustomFieldSettingsArray.t()}
+          | {:error, Req.Response.t()}
   def get_custom_field_settings_for_project(connection, project_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/projects/#{project_gid}/custom_field_settings")
@@ -91,13 +98,13 @@ defmodule Asana.Api.CustomFieldSettings do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.CustomFieldSettingsArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.CustomFieldSettingsArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

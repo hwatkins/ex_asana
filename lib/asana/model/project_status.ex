@@ -9,24 +9,24 @@ defmodule Asana.Model.ProjectStatus do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"title",
-    :"text",
-    :"color",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"created_at"
+    :title,
+    :text,
+    :color,
+    :id,
+    :gid,
+    :resource_type,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"title" => String.t | nil,
-    :"text" => String.t | nil,
-    :"color" => String.t | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :title => String.t() | nil,
+          :text => String.t() | nil,
+          :color => String.t() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.ProjectStatus do
@@ -34,4 +34,3 @@ defimpl Poison.Decoder, for: Asana.Model.ProjectStatus do
     value
   end
 end
-

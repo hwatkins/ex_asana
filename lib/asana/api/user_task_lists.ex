@@ -10,7 +10,6 @@ defmodule Asana.Api.UserTaskLists do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Get a user task list
   Returns the full record for a user task list.
@@ -28,17 +27,21 @@ defmodule Asana.Api.UserTaskLists do
   ## Returns
 
   {:ok, Asana.Model.UserTaskListObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_user_task_list(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.UserTaskListObject.t} | {:error, Tesla.Env.t}
+  @spec get_user_task_list(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.UserTaskListObject.t()}
+          | {:error, Req.Response.t()}
   def get_user_task_list(connection, user_task_list_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/user_task_list/#{user_task_list_gid}")
@@ -46,13 +49,13 @@ defmodule Asana.Api.UserTaskLists do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.UserTaskListObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.UserTaskListObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -74,18 +77,22 @@ defmodule Asana.Api.UserTaskLists do
   ## Returns
 
   {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_user_task_list_tasks(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.TaskArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_user_task_list_tasks(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.TaskArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_user_task_list_tasks(connection, user_task_list_gid, opts \\ []) do
     optional_params = %{
-      :"completed_since" => :query,
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :completed_since => :query,
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/user_task_lists/#{user_task_list_gid}/tasks")
@@ -93,13 +100,13 @@ defmodule Asana.Api.UserTaskLists do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TaskArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TaskArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -120,17 +127,21 @@ defmodule Asana.Api.UserTaskLists do
   ## Returns
 
   {:ok, Asana.Model.UserTaskListObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_users_task_list(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.UserTaskListObject.t} | {:error, Tesla.Env.t}
+  @spec get_users_task_list(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.UserTaskListObject.t()}
+          | {:error, Req.Response.t()}
   def get_users_task_list(connection, user_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/users/#{user_gid}/user_task_list")
@@ -138,13 +149,13 @@ defmodule Asana.Api.UserTaskLists do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.UserTaskListObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.UserTaskListObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

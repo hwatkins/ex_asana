@@ -10,7 +10,6 @@ defmodule Asana.Api.Webhooks do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Establish a webhook on a resource
   Establishing a webhook is a two-part process. First, a simple HTTP POST similar to any other resource creation. Since you could have multiple webhooks we recommend specifying a unique local id for each target.  Next comes the confirmation handshake. When a webhook is created, we will send a test POST to the target with an `X-Hook-Secret` header as described in the [Resthooks Security documentation](http://resthooks.org/docs/security/). The target must respond with a `200 OK` and a matching `X-Hook-Secret` header to confirm that this webhook subscription is indeed expected.  If you do not acknowledge the webhook’s confirmation handshake it will fail to setup, and you will receive an error in response to your attempt to create it. This means you need to be able to receive and complete the webhook *while* the POST request is in-flight.  ``` # Request curl -H \"Authorization: Bearer <personal_access_token>\" \\ -X POST https://app.asana.com/api/1.0/webhooks \\ -d \"resource=8675309\" \\ -d \"target=https://example.com/receive-webhook/7654\" ```  ``` # Handshake sent to https://example.com/ POST /receive-webhook/7654 X-Hook-Secret: b537207f20cbfa02357cf448134da559e8bd39d61597dcd5631b8012eae53e81 ```  ``` # Handshake response sent by example.com HTTP/1.1 200 X-Hook-Secret: b537207f20cbfa02357cf448134da559e8bd39d61597dcd5631b8012eae53e81 ```  ``` # Response HTTP/1.1 201 {   \"data\": {     \"id\": 43214,     \"resource\": {       \"id\": 8675309,       \"name\": \"Bugs\"     },     \"target\": \"https://example.com/receive-webhook/7654\",     \"active\": false,     \"last_success_at\": null,     \"last_failure_at\": null,     \"last_failure_content\": null   } } ```
@@ -28,17 +27,21 @@ defmodule Asana.Api.Webhooks do
   ## Returns
 
   {:ok, Asana.Model.WebhookObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_webhook(Tesla.Env.client, Asana.Model.InlineObject18.t, keyword()) :: {:ok, Asana.Model.WebhookObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec create_webhook(Asana.Connection.t(), Asana.Model.InlineObject18.t(), keyword()) ::
+          {:ok, Asana.Model.WebhookObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def create_webhook(connection, inline_object18, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/webhooks")
@@ -47,13 +50,13 @@ defmodule Asana.Api.Webhooks do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.WebhookObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.WebhookObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -74,17 +77,21 @@ defmodule Asana.Api.Webhooks do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec delete_webhook(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec delete_webhook(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def delete_webhook(connection, webhook_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:delete)
     |> url("/webhooks/#{webhook_gid}")
@@ -92,13 +99,13 @@ defmodule Asana.Api.Webhooks do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -119,17 +126,21 @@ defmodule Asana.Api.Webhooks do
   ## Returns
 
   {:ok, Asana.Model.WebhookObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_webhook(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.WebhookObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_webhook(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.WebhookObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_webhook(connection, webhook_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/webhooks/#{webhook_gid}")
@@ -137,13 +148,13 @@ defmodule Asana.Api.Webhooks do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.WebhookObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.WebhookObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -165,33 +176,37 @@ defmodule Asana.Api.Webhooks do
   ## Returns
 
   {:ok, Asana.Model.WebhookArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_webhooks(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.WebhookArray.t} | {:error, Tesla.Env.t}
+  @spec get_webhooks(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.WebhookArray.t()}
+          | {:error, Req.Response.t()}
   def get_webhooks(connection, workspace, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query,
-      :"resource" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query,
+      :resource => :query
     }
+
     %{}
     |> method(:get)
     |> url("/webhooks")
-    |> add_param(:query, :"workspace", workspace)
+    |> add_param(:query, :workspace, workspace)
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.WebhookArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.WebhookArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

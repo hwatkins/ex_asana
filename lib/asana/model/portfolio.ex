@@ -9,35 +9,35 @@ defmodule Asana.Model.Portfolio do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"color",
-    :"custom_field_settings",
-    :"owner",
-    :"workspace",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"created_at"
+    :color,
+    :custom_field_settings,
+    :owner,
+    :workspace,
+    :id,
+    :gid,
+    :resource_type,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"color" => String.t | nil,
-    :"custom_field_settings" => [Asana.Model.CustomFieldSettings.t] | nil,
-    :"owner" => UserCompact | nil,
-    :"workspace" => WorkspaceCompact | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :color => String.t() | nil,
+          :custom_field_settings => [Asana.Model.CustomFieldSettings.t()] | nil,
+          :owner => UserCompact | nil,
+          :workspace => WorkspaceCompact | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Portfolio do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"custom_field_settings", :list, Asana.Model.CustomFieldSettings, options)
-    |> deserialize(:"owner", :struct, Asana.Model.UserCompact, options)
-    |> deserialize(:"workspace", :struct, Asana.Model.WorkspaceCompact, options)
+    |> deserialize(:custom_field_settings, :list, Asana.Model.CustomFieldSettings, options)
+    |> deserialize(:owner, :struct, Asana.Model.UserCompact, options)
+    |> deserialize(:workspace, :struct, Asana.Model.WorkspaceCompact, options)
   end
 end
-

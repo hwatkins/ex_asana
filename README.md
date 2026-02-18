@@ -1,26 +1,38 @@
 # Asana
 
-This is the interface for interacting with the [Asana Platform](https://asana.com/developers/).
+Elixir wrapper for the [Asana REST API](https://developers.asana.com/reference/rest-api-reference), using [`Req`](https://hex.pm/packages/req) as the HTTP transport.
 
-### Building
+## Install
 
-To install the required dependencies and to build the elixir project, run:
-```
-mix local.hex --force
-mix do deps.get, compile
-```
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `asana` to your list of dependencies in `mix.exs`:
+Add to `mix.exs`:
 
 ```elixir
 def deps do
-  [{:asana, "~> 0.1.0"}]
+  [{:asana, "~> 1.0"}]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/asana](https://hexdocs.pm/asana).
+## Req Client Pattern
+
+Create a connection once and pass it into API modules:
+
+```elixir
+connection = Asana.Connection.new(System.fetch_env!("ASANA_ACCESS_TOKEN"))
+
+{:ok, workspace_list} =
+  Asana.Api.Workspaces.get_all_workspaces(connection, opt_fields: ["gid", "name"])
+```
+
+You can also use a token fetcher callback:
+
+```elixir
+connection = Asana.Connection.new(fn _scopes -> fetch_token_somehow() end)
+```
+
+## Development
+
+```bash
+mix deps.get
+mix test
+mix format
+```

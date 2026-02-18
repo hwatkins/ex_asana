@@ -4,17 +4,17 @@
 
 defmodule Asana.Model.TasksTaskGidAddTagData do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"tag"
+    :tag
   ]
 
   @type t :: %__MODULE__{
-    :"tag" => integer()
-  }
+          :tag => integer()
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.TasksTaskGidAddTagData do
@@ -22,4 +22,3 @@ defimpl Poison.Decoder, for: Asana.Model.TasksTaskGidAddTagData do
     value
   end
 end
-

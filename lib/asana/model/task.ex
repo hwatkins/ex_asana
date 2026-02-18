@@ -9,87 +9,87 @@ defmodule Asana.Model.Task do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"assignee",
-    :"assignee_status",
-    :"completed",
-    :"completed_at",
-    :"custom_fields",
-    :"dependencies",
-    :"dependents",
-    :"due_on",
-    :"due_at",
-    :"external",
-    :"followers",
-    :"html_notes",
-    :"liked",
-    :"likes",
-    :"memberships",
-    :"modified_at",
-    :"name",
-    :"notes",
-    :"num_likes",
-    :"num_subtasks",
-    :"projects",
-    :"parent",
-    :"start_on",
-    :"tags",
-    :"workspace",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"created_at",
-    :"resource_subtype"
+    :assignee,
+    :assignee_status,
+    :completed,
+    :completed_at,
+    :custom_fields,
+    :dependencies,
+    :dependents,
+    :due_on,
+    :due_at,
+    :external,
+    :followers,
+    :html_notes,
+    :liked,
+    :likes,
+    :memberships,
+    :modified_at,
+    :name,
+    :notes,
+    :num_likes,
+    :num_subtasks,
+    :projects,
+    :parent,
+    :start_on,
+    :tags,
+    :workspace,
+    :id,
+    :gid,
+    :resource_type,
+    :created_at,
+    :resource_subtype
   ]
 
   @type t :: %__MODULE__{
-    :"assignee" => User | nil,
-    :"assignee_status" => String.t | nil,
-    :"completed" => boolean() | nil,
-    :"completed_at" => DateTime.t | nil,
-    :"custom_fields" => [Asana.Model.CustomField.t] | nil,
-    :"dependencies" => [map()] | nil,
-    :"dependents" => [map()] | nil,
-    :"due_on" => Date.t | nil,
-    :"due_at" => Date.t | nil,
-    :"external" => map() | nil,
-    :"followers" => [Asana.Model.UserCompact.t] | nil,
-    :"html_notes" => String.t | nil,
-    :"liked" => boolean() | nil,
-    :"likes" => [Asana.Model.UserCompact.t] | nil,
-    :"memberships" => [map()] | nil,
-    :"modified_at" => DateTime.t | nil,
-    :"name" => String.t | nil,
-    :"notes" => String.t | nil,
-    :"num_likes" => integer() | nil,
-    :"num_subtasks" => integer() | nil,
-    :"projects" => [Asana.Model.ProjectCompact.t] | nil,
-    :"parent" => TaskCompact | nil,
-    :"start_on" => Date.t | nil,
-    :"tags" => [Asana.Model.Tag.t] | nil,
-    :"workspace" => WorkspaceCompact | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"created_at" => DateTime.t | nil,
-    :"resource_subtype" => String.t | nil
-  }
+          :assignee => User | nil,
+          :assignee_status => String.t() | nil,
+          :completed => boolean() | nil,
+          :completed_at => DateTime.t() | nil,
+          :custom_fields => [Asana.Model.CustomField.t()] | nil,
+          :dependencies => [map()] | nil,
+          :dependents => [map()] | nil,
+          :due_on => Date.t() | nil,
+          :due_at => Date.t() | nil,
+          :external => map() | nil,
+          :followers => [Asana.Model.UserCompact.t()] | nil,
+          :html_notes => String.t() | nil,
+          :liked => boolean() | nil,
+          :likes => [Asana.Model.UserCompact.t()] | nil,
+          :memberships => [map()] | nil,
+          :modified_at => DateTime.t() | nil,
+          :name => String.t() | nil,
+          :notes => String.t() | nil,
+          :num_likes => integer() | nil,
+          :num_subtasks => integer() | nil,
+          :projects => [Asana.Model.ProjectCompact.t()] | nil,
+          :parent => TaskCompact | nil,
+          :start_on => Date.t() | nil,
+          :tags => [Asana.Model.Tag.t()] | nil,
+          :workspace => WorkspaceCompact | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :created_at => DateTime.t() | nil,
+          :resource_subtype => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Task do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"assignee", :struct, Asana.Model.User, options)
-    |> deserialize(:"custom_fields", :list, Asana.Model.CustomField, options)
-    |> deserialize(:"due_on", :date, nil, options)
-    |> deserialize(:"due_at", :date, nil, options)
-    |> deserialize(:"followers", :list, Asana.Model.UserCompact, options)
-    |> deserialize(:"likes", :list, Asana.Model.UserCompact, options)
-    |> deserialize(:"projects", :list, Asana.Model.ProjectCompact, options)
-    |> deserialize(:"parent", :struct, Asana.Model.TaskCompact, options)
-    |> deserialize(:"start_on", :date, nil, options)
-    |> deserialize(:"tags", :list, Asana.Model.Tag, options)
-    |> deserialize(:"workspace", :struct, Asana.Model.WorkspaceCompact, options)
+    |> deserialize(:assignee, :struct, Asana.Model.User, options)
+    |> deserialize(:custom_fields, :list, Asana.Model.CustomField, options)
+    |> deserialize(:due_on, :date, nil, options)
+    |> deserialize(:due_at, :date, nil, options)
+    |> deserialize(:followers, :list, Asana.Model.UserCompact, options)
+    |> deserialize(:likes, :list, Asana.Model.UserCompact, options)
+    |> deserialize(:projects, :list, Asana.Model.ProjectCompact, options)
+    |> deserialize(:parent, :struct, Asana.Model.TaskCompact, options)
+    |> deserialize(:start_on, :date, nil, options)
+    |> deserialize(:tags, :list, Asana.Model.Tag, options)
+    |> deserialize(:workspace, :struct, Asana.Model.WorkspaceCompact, options)
   end
 end
-

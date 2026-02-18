@@ -9,14 +9,14 @@ defmodule Asana.Model.EventResource do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"id",
-    :"name"
+    :id,
+    :name
   ]
 
   @type t :: %__MODULE__{
-    :"id" => integer() | nil,
-    :"name" => String.t | nil
-  }
+          :id => integer() | nil,
+          :name => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.EventResource do
@@ -24,4 +24,3 @@ defimpl Poison.Decoder, for: Asana.Model.EventResource do
     value
   end
 end
-

@@ -10,7 +10,6 @@ defmodule Asana.Api.CustomFields do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Create an enum option
   Creates an enum option and adds it to this custom field’s list of enum options. A custom field can have at most 50 enum options (including disabled options). By default new enum options are inserted at the end of a custom field’s list. Locked custom fields can only have enum options added by the user who locked the field. Returns the full record of the newly created enum option.
@@ -29,17 +28,21 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.InlineResponse201.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec add_enum_option(Tesla.Env.client, integer(), Asana.Model.InlineObject2.t, keyword()) :: {:ok, Asana.Model.InlineResponse201.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec add_enum_option(Asana.Connection.t(), integer(), Asana.Model.InlineObject2.t(), keyword()) ::
+          {:ok, Asana.Model.InlineResponse201.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def add_enum_option(connection, custom_field_gid, inline_object2, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/custom_fields/#{custom_field_gid}/enum_options")
@@ -48,13 +51,13 @@ defmodule Asana.Api.CustomFields do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.InlineResponse201{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.InlineResponse201{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -75,17 +78,21 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.CustomFieldObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_custom_field(Tesla.Env.client, Asana.Model.InlineObject1.t, keyword()) :: {:ok, Asana.Model.CustomFieldObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec create_custom_field(Asana.Connection.t(), Asana.Model.InlineObject1.t(), keyword()) ::
+          {:ok, Asana.Model.CustomFieldObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def create_custom_field(connection, inline_object1, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/custom_fields")
@@ -94,13 +101,13 @@ defmodule Asana.Api.CustomFields do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.CustomFieldObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.CustomFieldObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -121,17 +128,21 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec delete_custom_field(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec delete_custom_field(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def delete_custom_field(connection, custom_field_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:delete)
     |> url("/custom_fields/#{custom_field_gid}")
@@ -139,13 +150,13 @@ defmodule Asana.Api.CustomFields do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -166,17 +177,21 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.CustomFieldObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_custom_field(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.CustomFieldObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_custom_field(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.CustomFieldObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_custom_field(connection, custom_field_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/custom_fields/#{custom_field_gid}")
@@ -184,13 +199,13 @@ defmodule Asana.Api.CustomFields do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.CustomFieldObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.CustomFieldObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -211,17 +226,21 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.CustomFieldArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_custom_fields_in_workspace(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.CustomFieldArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_custom_fields_in_workspace(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.CustomFieldArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_custom_fields_in_workspace(connection, workspace_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/workspaces/#{workspace_gid}/custom_fields")
@@ -229,13 +248,13 @@ defmodule Asana.Api.CustomFields do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.CustomFieldArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.CustomFieldArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -256,32 +275,36 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec portfolio_add_custom_field_setting(Tesla.Env.client, String.t, integer(), keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec portfolio_add_custom_field_setting(Asana.Connection.t(), String.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def portfolio_add_custom_field_setting(connection, portfolio_gid, custom_field, opts \\ []) do
     optional_params = %{
-      :"is_important" => :query,
-      :"insert_before" => :query,
-      :"insert_after" => :query,
-      :"opt_pretty" => :query
+      :is_important => :query,
+      :insert_before => :query,
+      :insert_after => :query,
+      :opt_pretty => :query
     }
+
     %{}
     |> method(:post)
     |> url("/portfolios/#{portfolio_gid}/addCustomFieldSetting")
-    |> add_param(:query, :"custom_field", custom_field)
+    |> add_param(:query, :custom_field, custom_field)
     |> add_optional_params(optional_params, opts)
     |> ensure_body()
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -299,29 +322,38 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec portfolio_remove_custom_field_setting(Tesla.Env.client, String.t, integer(), keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec portfolio_remove_custom_field_setting(
+          Asana.Connection.t(),
+          String.t(),
+          integer(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def portfolio_remove_custom_field_setting(connection, portfolio_gid, custom_field, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query
+      :opt_pretty => :query
     }
+
     %{}
     |> method(:post)
     |> url("/portfolios/#{portfolio_gid}/removeCustomFieldSetting")
-    |> add_param(:query, :"custom_field", custom_field)
+    |> add_param(:query, :custom_field, custom_field)
     |> add_optional_params(optional_params, opts)
     |> ensure_body()
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -342,32 +374,36 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec project_add_custom_field_setting(Tesla.Env.client, String.t, integer(), keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec project_add_custom_field_setting(Asana.Connection.t(), String.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def project_add_custom_field_setting(connection, project_gid, custom_field, opts \\ []) do
     optional_params = %{
-      :"is_important" => :query,
-      :"insert_before" => :query,
-      :"insert_after" => :query,
-      :"opt_pretty" => :query
+      :is_important => :query,
+      :insert_before => :query,
+      :insert_after => :query,
+      :opt_pretty => :query
     }
+
     %{}
     |> method(:post)
     |> url("/projects/#{project_gid}/addCustomFieldSetting")
-    |> add_param(:query, :"custom_field", custom_field)
+    |> add_param(:query, :custom_field, custom_field)
     |> add_optional_params(optional_params, opts)
     |> ensure_body()
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -385,29 +421,38 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec project_remove_custom_field_setting(Tesla.Env.client, String.t, integer(), keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec project_remove_custom_field_setting(
+          Asana.Connection.t(),
+          String.t(),
+          integer(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def project_remove_custom_field_setting(connection, project_gid, custom_field, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query
+      :opt_pretty => :query
     }
+
     %{}
     |> method(:post)
     |> url("/projects/#{project_gid}/removeCustomFieldSetting")
-    |> add_param(:query, :"custom_field", custom_field)
+    |> add_param(:query, :custom_field, custom_field)
     |> add_optional_params(optional_params, opts)
     |> ensure_body()
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -429,17 +474,26 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.InlineResponse201.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec reorder_enum_option(Tesla.Env.client, integer(), Asana.Model.InlineObject3.t, keyword()) :: {:ok, Asana.Model.InlineResponse201.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec reorder_enum_option(
+          Asana.Connection.t(),
+          integer(),
+          Asana.Model.InlineObject3.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.InlineResponse201.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def reorder_enum_option(connection, custom_field_gid, inline_object3, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/custom_fields/#{custom_field_gid}/enum_options/insert")
@@ -448,13 +502,13 @@ defmodule Asana.Api.CustomFields do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.InlineResponse201{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.InlineResponse201{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -476,17 +530,26 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.CustomFieldObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec update_custom_field(Tesla.Env.client, integer(), Asana.Model.CustomFieldObject.t, keyword()) :: {:ok, Asana.Model.CustomFieldObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec update_custom_field(
+          Asana.Connection.t(),
+          integer(),
+          Asana.Model.CustomFieldObject.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.CustomFieldObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def update_custom_field(connection, custom_field_gid, custom_field_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:put)
     |> url("/custom_fields/#{custom_field_gid}")
@@ -495,13 +558,13 @@ defmodule Asana.Api.CustomFields do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.CustomFieldObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.CustomFieldObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -523,17 +586,26 @@ defmodule Asana.Api.CustomFields do
   ## Returns
 
   {:ok, Asana.Model.InlineObject4.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec update_enum_option(Tesla.Env.client, integer(), Asana.Model.InlineObject4.t, keyword()) :: {:ok, Asana.Model.InlineObject4.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec update_enum_option(
+          Asana.Connection.t(),
+          integer(),
+          Asana.Model.InlineObject4.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.InlineObject4.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def update_enum_option(connection, enum_option_gid, inline_object4, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:put)
     |> url("/enum_options/#{enum_option_gid}")
@@ -542,13 +614,13 @@ defmodule Asana.Api.CustomFields do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.InlineObject4{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.InlineObject4{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

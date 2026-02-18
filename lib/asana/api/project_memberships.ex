@@ -10,7 +10,6 @@ defmodule Asana.Api.ProjectMemberships do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Get a project membership
   Returns the complete project record for a single project membership.
@@ -28,17 +27,21 @@ defmodule Asana.Api.ProjectMemberships do
   ## Returns
 
   {:ok, Asana.Model.ProjectMembershipObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_project_membership(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectMembershipObject.t} | {:error, Tesla.Env.t}
+  @spec get_project_membership(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectMembershipObject.t()}
+          | {:error, Req.Response.t()}
   def get_project_membership(connection, project_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/project_memberships/#{project_gid}")
@@ -46,13 +49,13 @@ defmodule Asana.Api.ProjectMemberships do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectMembershipObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectMembershipObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -74,18 +77,22 @@ defmodule Asana.Api.ProjectMemberships do
   ## Returns
 
   {:ok, Asana.Model.ProjectMembershipArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_project_memberships_for_project(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.ProjectMembershipArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_project_memberships_for_project(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.ProjectMembershipArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_project_memberships_for_project(connection, project_gid, opts \\ []) do
     optional_params = %{
-      :"user" => :query,
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :user => :query,
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/projects/#{project_gid}/project_memberships")
@@ -93,13 +100,13 @@ defmodule Asana.Api.ProjectMemberships do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectMembershipArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectMembershipArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

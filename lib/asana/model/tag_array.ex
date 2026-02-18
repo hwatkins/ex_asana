@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.TagArray do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => [Asana.Model.Tag.t] | nil
-  }
+          :data => [Asana.Model.Tag.t()] | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.TagArray do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :list, Asana.Model.Tag, options)
+    |> deserialize(:data, :list, Asana.Model.Tag, options)
   end
 end
-

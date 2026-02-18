@@ -9,22 +9,22 @@ defmodule Asana.Model.EnumOption do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"name",
-    :"enabled",
-    :"color",
-    :"id",
-    :"gid",
-    :"resource_type"
+    :name,
+    :enabled,
+    :color,
+    :id,
+    :gid,
+    :resource_type
   ]
 
   @type t :: %__MODULE__{
-    :"name" => String.t | nil,
-    :"enabled" => boolean() | nil,
-    :"color" => String.t | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil
-  }
+          :name => String.t() | nil,
+          :enabled => boolean() | nil,
+          :color => String.t() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.EnumOption do
@@ -32,4 +32,3 @@ defimpl Poison.Decoder, for: Asana.Model.EnumOption do
     value
   end
 end
-

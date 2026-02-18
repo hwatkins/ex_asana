@@ -9,37 +9,37 @@ defmodule Asana.Model.Webhook do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"active",
-    :"last_failure_at",
-    :"last_failure_content",
-    :"last_success_at",
-    :"resource",
-    :"target",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"created_at"
+    :active,
+    :last_failure_at,
+    :last_failure_content,
+    :last_success_at,
+    :resource,
+    :target,
+    :id,
+    :gid,
+    :resource_type,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"active" => boolean() | nil,
-    :"last_failure_at" => DateTime.t | nil,
-    :"last_failure_content" => String.t | nil,
-    :"last_success_at" => DateTime.t | nil,
-    :"resource" => AsanaNamedObject | nil,
-    :"target" => String.t | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :active => boolean() | nil,
+          :last_failure_at => DateTime.t() | nil,
+          :last_failure_content => String.t() | nil,
+          :last_success_at => DateTime.t() | nil,
+          :resource => AsanaNamedObject | nil,
+          :target => String.t() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Webhook do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"resource", :struct, Asana.Model.AsanaNamedObject, options)
+    |> deserialize(:resource, :struct, Asana.Model.AsanaNamedObject, options)
   end
 end
-

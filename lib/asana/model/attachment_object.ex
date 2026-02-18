@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.AttachmentObject do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => Asana.Model.Attachment.t | nil
-  }
+          :data => Asana.Model.Attachment.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.AttachmentObject do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :struct, Asana.Model.Attachment, options)
+    |> deserialize(:data, :struct, Asana.Model.Attachment, options)
   end
 end
-

@@ -4,19 +4,19 @@
 
 defmodule Asana.Model.ErrorErrors do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"message",
-    :"phrase"
+    :message,
+    :phrase
   ]
 
   @type t :: %__MODULE__{
-    :"message" => String.t | nil,
-    :"phrase" => String.t | nil
-  }
+          :message => String.t() | nil,
+          :phrase => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.ErrorErrors do
@@ -24,4 +24,3 @@ defimpl Poison.Decoder, for: Asana.Model.ErrorErrors do
     value
   end
 end
-

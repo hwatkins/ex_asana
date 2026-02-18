@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.InlineResponse201 do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => Asana.Model.EnumOption.t | nil
-  }
+          :data => Asana.Model.EnumOption.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.InlineResponse201 do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :struct, Asana.Model.EnumOption, options)
+    |> deserialize(:data, :struct, Asana.Model.EnumOption, options)
   end
 end
-

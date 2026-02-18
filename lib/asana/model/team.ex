@@ -9,20 +9,20 @@ defmodule Asana.Model.Team do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"description",
-    :"html_description",
-    :"id",
-    :"gid",
-    :"resource_type"
+    :description,
+    :html_description,
+    :id,
+    :gid,
+    :resource_type
   ]
 
   @type t :: %__MODULE__{
-    :"description" => String.t | nil,
-    :"html_description" => String.t | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil
-  }
+          :description => String.t() | nil,
+          :html_description => String.t() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Team do
@@ -30,4 +30,3 @@ defimpl Poison.Decoder, for: Asana.Model.Team do
     value
   end
 end
-

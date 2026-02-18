@@ -10,7 +10,6 @@ defmodule Asana.Api.Tags do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Create a tag
   Creates a new tag in a workspace or organization.  Every tag is required to be created in a specific workspace or organization, and this cannot be changed once set. Note that you can use the workspace parameter regardless of whether or not it is an organization.  Returns the full record of the newly created tag.
@@ -28,17 +27,21 @@ defmodule Asana.Api.Tags do
   ## Returns
 
   {:ok, Asana.Model.TagObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_tag(Tesla.Env.client, Asana.Model.TagObject.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.TagObject.t} | {:error, Tesla.Env.t}
+  @spec create_tag(Asana.Connection.t(), Asana.Model.TagObject.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.TagObject.t()}
+          | {:error, Req.Response.t()}
   def create_tag(connection, tag_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/tags")
@@ -47,13 +50,13 @@ defmodule Asana.Api.Tags do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.TagObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.TagObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -75,17 +78,26 @@ defmodule Asana.Api.Tags do
   ## Returns
 
   {:ok, Asana.Model.TagArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_tag_in_workspace(Tesla.Env.client, integer(), Asana.Model.TagObject.t, keyword()) :: {:ok, Asana.Model.TagArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec create_tag_in_workspace(
+          Asana.Connection.t(),
+          integer(),
+          Asana.Model.TagObject.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.TagArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def create_tag_in_workspace(connection, workspace_gid, tag_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/workspaces/#{workspace_gid}/tags")
@@ -94,13 +106,13 @@ defmodule Asana.Api.Tags do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TagArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TagArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -121,17 +133,21 @@ defmodule Asana.Api.Tags do
   ## Returns
 
   {:ok, Asana.Model.TagObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_tag(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.TagObject.t} | {:error, Tesla.Env.t}
+  @spec get_tag(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.TagObject.t()}
+          | {:error, Req.Response.t()}
   def get_tag(connection, tag_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/tags/#{tag_gid}")
@@ -139,13 +155,13 @@ defmodule Asana.Api.Tags do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TagObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TagObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -166,17 +182,21 @@ defmodule Asana.Api.Tags do
   ## Returns
 
   {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_tag_tasks(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.TaskArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_tag_tasks(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.TaskArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_tag_tasks(connection, tag_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/tags/#{tag_gid}/tasks")
@@ -184,13 +204,13 @@ defmodule Asana.Api.Tags do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TaskArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TaskArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -211,17 +231,21 @@ defmodule Asana.Api.Tags do
   ## Returns
 
   {:ok, Asana.Model.TagArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec query_all_tags_in_workspace(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.TagArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec query_all_tags_in_workspace(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.TagArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def query_all_tags_in_workspace(connection, workspace_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/workspaces/#{workspace_gid}/tags")
@@ -229,13 +253,13 @@ defmodule Asana.Api.Tags do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TagArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TagArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -257,19 +281,23 @@ defmodule Asana.Api.Tags do
   ## Returns
 
   {:ok, Asana.Model.TagArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec query_tags(Tesla.Env.client, keyword()) :: {:ok, Asana.Model.TagArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec query_tags(Asana.Connection.t(), keyword()) ::
+          {:ok, Asana.Model.TagArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def query_tags(connection, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query,
-      :"workspace" => :query,
-      :"archived" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query,
+      :workspace => :query,
+      :archived => :query
     }
+
     %{}
     |> method(:get)
     |> url("/tags")
@@ -277,13 +305,13 @@ defmodule Asana.Api.Tags do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TagArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TagArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -304,17 +332,21 @@ defmodule Asana.Api.Tags do
   ## Returns
 
   {:ok, Asana.Model.TagObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec update_tag(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.TagObject.t} | {:error, Tesla.Env.t}
+  @spec update_tag(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.TagObject.t()}
+          | {:error, Req.Response.t()}
   def update_tag(connection, tag_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:put)
     |> url("/tags/#{tag_gid}")
@@ -323,13 +355,13 @@ defmodule Asana.Api.Tags do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TagObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TagObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

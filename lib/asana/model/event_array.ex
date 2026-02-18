@@ -9,21 +9,21 @@ defmodule Asana.Model.EventArray do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data",
-    :"sync"
+    :data,
+    :sync
   ]
 
   @type t :: %__MODULE__{
-    :"data" => [Asana.Model.Event.t] | nil,
-    :"sync" => String.t | nil
-  }
+          :data => [Asana.Model.Event.t()] | nil,
+          :sync => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.EventArray do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :list, Asana.Model.Event, options)
+    |> deserialize(:data, :list, Asana.Model.Event, options)
   end
 end
-

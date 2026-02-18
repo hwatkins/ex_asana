@@ -9,20 +9,20 @@ defmodule Asana.Model.Workspace do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"email_domains",
-    :"is_organization",
-    :"id",
-    :"gid",
-    :"resource_type"
+    :email_domains,
+    :is_organization,
+    :id,
+    :gid,
+    :resource_type
   ]
 
   @type t :: %__MODULE__{
-    :"email_domains" => [String.t] | nil,
-    :"is_organization" => boolean() | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil
-  }
+          :email_domains => [String.t()] | nil,
+          :is_organization => boolean() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Workspace do
@@ -30,4 +30,3 @@ defimpl Poison.Decoder, for: Asana.Model.Workspace do
     value
   end
 end
-

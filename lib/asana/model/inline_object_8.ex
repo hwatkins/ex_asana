@@ -4,19 +4,19 @@
 
 defmodule Asana.Model.InlineObject8 do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"project",
-    :"name"
+    :project,
+    :name
   ]
 
   @type t :: %__MODULE__{
-    :"project" => integer(),
-    :"name" => String.t
-  }
+          :project => integer(),
+          :name => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.InlineObject8 do
@@ -24,4 +24,3 @@ defimpl Poison.Decoder, for: Asana.Model.InlineObject8 do
     value
   end
 end
-

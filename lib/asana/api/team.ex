@@ -10,7 +10,6 @@ defmodule Asana.Api.Team do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Add a user to a team
   The user making this call must be a member of the team in order to add others. The user being added must exist in the same organization as the team.
@@ -29,17 +28,21 @@ defmodule Asana.Api.Team do
   ## Returns
 
   {:ok, Asana.Model.UserArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec add_user_to_team(Tesla.Env.client, integer(), Asana.Model.UserIdObject.t, keyword()) :: {:ok, Asana.Model.UserArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec add_user_to_team(Asana.Connection.t(), integer(), Asana.Model.UserIdObject.t(), keyword()) ::
+          {:ok, Asana.Model.UserArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def add_user_to_team(connection, team_gid, user_id_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/teams/#{team_gid}/addUser")
@@ -48,13 +51,13 @@ defmodule Asana.Api.Team do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.UserArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.UserArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -75,17 +78,21 @@ defmodule Asana.Api.Team do
   ## Returns
 
   {:ok, Asana.Model.TeamArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_all_teams(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.TeamArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_all_teams(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.TeamArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_all_teams(connection, organization_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/organizations/#{organization_gid}/teams")
@@ -93,13 +100,13 @@ defmodule Asana.Api.Team do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TeamArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TeamArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -120,17 +127,21 @@ defmodule Asana.Api.Team do
   ## Returns
 
   {:ok, Asana.Model.TeamObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_team(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.TeamObject.t} | {:error, Tesla.Env.t}
+  @spec get_team(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.TeamObject.t()}
+          | {:error, Req.Response.t()}
   def get_team(connection, team_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/teams/#{team_gid}")
@@ -138,13 +149,13 @@ defmodule Asana.Api.Team do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TeamObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TeamObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -166,32 +177,41 @@ defmodule Asana.Api.Team do
   ## Returns
 
   {:ok, Asana.Model.TeamArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_teams_for_user(Tesla.Env.client, Asana.Model.OneOfstringstringstring.t, integer(), keyword()) :: {:ok, Asana.Model.TeamArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_teams_for_user(
+          Asana.Connection.t(),
+          Asana.Model.OneOfstringstringstring.t(),
+          integer(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.TeamArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_teams_for_user(connection, user_gid, organization_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/users/#{user_gid}/teams")
-    |> add_param(:query, :"organization", organization_gid)
+    |> add_param(:query, :organization, organization_gid)
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TeamArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TeamArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -212,17 +232,21 @@ defmodule Asana.Api.Team do
   ## Returns
 
   {:ok, Asana.Model.UserArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_users_for_team(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.UserArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_users_for_team(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.UserArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_users_for_team(connection, team_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/teams/#{team_gid}/users")
@@ -230,13 +254,13 @@ defmodule Asana.Api.Team do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.UserArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.UserArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -258,17 +282,26 @@ defmodule Asana.Api.Team do
   ## Returns
 
   {:ok, Asana.Model.UserArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec remove_user_from_team(Tesla.Env.client, integer(), Asana.Model.UserIdObject.t, keyword()) :: {:ok, Asana.Model.UserArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec remove_user_from_team(
+          Asana.Connection.t(),
+          integer(),
+          Asana.Model.UserIdObject.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.UserArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def remove_user_from_team(connection, team_gid, user_id_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/teams/#{team_gid}/removeUser")
@@ -277,13 +310,13 @@ defmodule Asana.Api.Team do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.UserArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.UserArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

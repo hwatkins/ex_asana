@@ -10,7 +10,6 @@ defmodule Asana.Api.Projects do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Create a new project
   Create a new project in a workspace or team.  Every project is required to be created in a specific workspace or organization, and this cannot be changed once set. Note that you can use the `workspace` parameter regardless of whether or not it is an organization.  If the workspace for your project is an organization, you must also supply a `team` to share the project with.  Returns the full record of the newly created project.
@@ -28,17 +27,21 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_project(Tesla.Env.client, Asana.Model.InlineObject7.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectArray.t} | {:error, Tesla.Env.t}
+  @spec create_project(Asana.Connection.t(), Asana.Model.InlineObject7.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectArray.t()}
+          | {:error, Req.Response.t()}
   def create_project(connection, inline_object7, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/projects")
@@ -47,13 +50,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.ProjectArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.ProjectArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -70,9 +73,17 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectStatusObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_project_status(Tesla.Env.client, integer(), Asana.Model.InlineObject6.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectStatusObject.t} | {:error, Tesla.Env.t}
+  @spec create_project_status(
+          Asana.Connection.t(),
+          integer(),
+          Asana.Model.InlineObject6.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectStatusObject.t()}
+          | {:error, Req.Response.t()}
   def create_project_status(connection, project_gid, inline_object6, _opts \\ []) do
     %{}
     |> method(:post)
@@ -81,13 +92,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.ProjectStatusObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.ProjectStatusObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -109,17 +120,26 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_projects_in_workspace(Tesla.Env.client, String.t, Asana.Model.ProjectObject.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectObject.t} | {:error, Tesla.Env.t}
+  @spec create_projects_in_workspace(
+          Asana.Connection.t(),
+          String.t(),
+          Asana.Model.ProjectObject.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectObject.t()}
+          | {:error, Req.Response.t()}
   def create_projects_in_workspace(connection, workspace_gid, project_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/workspaces/#{workspace_gid}/projects")
@@ -128,13 +148,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.ProjectObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.ProjectObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -156,17 +176,26 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_projects_with_team(Tesla.Env.client, String.t, Asana.Model.ProjectObject.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectObject.t} | {:error, Tesla.Env.t}
+  @spec create_projects_with_team(
+          Asana.Connection.t(),
+          String.t(),
+          Asana.Model.ProjectObject.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectObject.t()}
+          | {:error, Req.Response.t()}
   def create_projects_with_team(connection, team_gid, project_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/teams/#{team_gid}/projects")
@@ -175,13 +204,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.ProjectObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.ProjectObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -202,17 +231,21 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec delete_project(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec delete_project(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def delete_project(connection, project_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:delete)
     |> url("/projects/#{project_gid}")
@@ -220,13 +253,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -242,9 +275,12 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectStatusArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_product_statuses(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectStatusArray.t} | {:error, Tesla.Env.t}
+  @spec get_product_statuses(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectStatusArray.t()}
+          | {:error, Req.Response.t()}
   def get_product_statuses(connection, project_gid, _opts \\ []) do
     %{}
     |> method(:get)
@@ -252,13 +288,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectStatusArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectStatusArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -279,17 +315,21 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_project(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectObject.t} | {:error, Tesla.Env.t}
+  @spec get_project(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectObject.t()}
+          | {:error, Req.Response.t()}
   def get_project(connection, project_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/projects/#{project_gid}")
@@ -297,13 +337,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -324,17 +364,21 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.TaskArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_project_tasks(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.TaskArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_project_tasks(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.TaskArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_project_tasks(connection, project_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/projects/#{project_gid}/tasks")
@@ -342,13 +386,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.TaskArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.TaskArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -371,20 +415,24 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_projects(Tesla.Env.client, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectArray.t} | {:error, Tesla.Env.t}
+  @spec get_projects(Asana.Connection.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectArray.t()}
+          | {:error, Req.Response.t()}
   def get_projects(connection, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query,
-      :"workspace" => :query,
-      :"team" => :query,
-      :"archived" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query,
+      :workspace => :query,
+      :team => :query,
+      :archived => :query
     }
+
     %{}
     |> method(:get)
     |> url("/projects")
@@ -392,13 +440,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -420,18 +468,22 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_projects_in_team(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectArray.t} | {:error, Tesla.Env.t}
+  @spec get_projects_in_team(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectArray.t()}
+          | {:error, Req.Response.t()}
   def get_projects_in_team(connection, team_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query,
-      :"archived" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query,
+      :archived => :query
     }
+
     %{}
     |> method(:get)
     |> url("/teams/#{team_gid}/projects")
@@ -439,13 +491,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -467,18 +519,22 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_projects_in_workspace(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectArray.t} | {:error, Tesla.Env.t}
+  @spec get_projects_in_workspace(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectArray.t()}
+          | {:error, Req.Response.t()}
   def get_projects_in_workspace(connection, workspace_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query,
-      :"archived" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query,
+      :archived => :query
     }
+
     %{}
     |> method(:get)
     |> url("/workspaces/#{workspace_gid}/projects")
@@ -486,13 +542,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -513,32 +569,36 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec project_add_custom_field_setting(Tesla.Env.client, String.t, integer(), keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec project_add_custom_field_setting(Asana.Connection.t(), String.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def project_add_custom_field_setting(connection, project_gid, custom_field, opts \\ []) do
     optional_params = %{
-      :"is_important" => :query,
-      :"insert_before" => :query,
-      :"insert_after" => :query,
-      :"opt_pretty" => :query
+      :is_important => :query,
+      :insert_before => :query,
+      :insert_after => :query,
+      :opt_pretty => :query
     }
+
     %{}
     |> method(:post)
     |> url("/projects/#{project_gid}/addCustomFieldSetting")
-    |> add_param(:query, :"custom_field", custom_field)
+    |> add_param(:query, :custom_field, custom_field)
     |> add_optional_params(optional_params, opts)
     |> ensure_body()
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -556,29 +616,38 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec project_remove_custom_field_setting(Tesla.Env.client, String.t, integer(), keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec project_remove_custom_field_setting(
+          Asana.Connection.t(),
+          String.t(),
+          integer(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def project_remove_custom_field_setting(connection, project_gid, custom_field, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query
+      :opt_pretty => :query
     }
+
     %{}
     |> method(:post)
     |> url("/projects/#{project_gid}/removeCustomFieldSetting")
-    |> add_param(:query, :"custom_field", custom_field)
+    |> add_param(:query, :custom_field, custom_field)
     |> add_optional_params(optional_params, opts)
     |> ensure_body()
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -600,17 +669,21 @@ defmodule Asana.Api.Projects do
   ## Returns
 
   {:ok, Asana.Model.ProjectObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec update_project(Tesla.Env.client, String.t, Asana.Model.ProjectObject.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectObject.t} | {:error, Tesla.Env.t}
+  @spec update_project(Asana.Connection.t(), String.t(), Asana.Model.ProjectObject.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectObject.t()}
+          | {:error, Req.Response.t()}
   def update_project(connection, project_gid, project_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:put)
     |> url("/projects/#{project_gid}")
@@ -619,13 +692,13 @@ defmodule Asana.Api.Projects do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

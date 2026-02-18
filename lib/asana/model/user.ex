@@ -9,31 +9,31 @@ defmodule Asana.Model.User do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"email",
-    :"name",
-    :"photo",
-    :"workspaces",
-    :"id",
-    :"gid",
-    :"resource_type"
+    :email,
+    :name,
+    :photo,
+    :workspaces,
+    :id,
+    :gid,
+    :resource_type
   ]
 
   @type t :: %__MODULE__{
-    :"email" => String.t | nil,
-    :"name" => String.t | nil,
-    :"photo" => map() | nil,
-    :"workspaces" => [Asana.Model.Workspace.t] | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil
-  }
+          :email => String.t() | nil,
+          :name => String.t() | nil,
+          :photo => map() | nil,
+          :workspaces => [Asana.Model.Workspace.t()] | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.User do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"workspaces", :list, Asana.Model.Workspace, options)
+    |> deserialize(:workspaces, :list, Asana.Model.Workspace, options)
   end
 end
-

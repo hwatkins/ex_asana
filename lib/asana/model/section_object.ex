@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.SectionObject do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => Asana.Model.Section.t | nil
-  }
+          :data => Asana.Model.Section.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.SectionObject do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :struct, Asana.Model.Section, options)
+    |> deserialize(:data, :struct, Asana.Model.Section, options)
   end
 end
-

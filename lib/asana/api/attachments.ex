@@ -10,7 +10,6 @@ defmodule Asana.Api.Attachments do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Get an attachment
   Get the full record for a single attachment.
@@ -28,17 +27,21 @@ defmodule Asana.Api.Attachments do
   ## Returns
 
   {:ok, Asana.Model.AttachmentObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_attachment(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.AttachmentObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_attachment(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.AttachmentObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_attachment(connection, attachment_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/attachments/#{attachment_gid}")
@@ -46,13 +49,13 @@ defmodule Asana.Api.Attachments do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.AttachmentObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.AttachmentObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -73,17 +76,21 @@ defmodule Asana.Api.Attachments do
   ## Returns
 
   {:ok, Asana.Model.AttachmentArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_attachments_for_task(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.AttachmentArray.t} | {:error, Tesla.Env.t}
+  @spec get_attachments_for_task(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.AttachmentArray.t()}
+          | {:error, Req.Response.t()}
   def get_attachments_for_task(connection, task_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/tasks/#{task_gid}/attachments")
@@ -91,13 +98,13 @@ defmodule Asana.Api.Attachments do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.AttachmentArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.AttachmentArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -119,18 +126,22 @@ defmodule Asana.Api.Attachments do
   ## Returns
 
   {:ok, Asana.Model.AttachmentObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec upload_attachment_to_task(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.AttachmentObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec upload_attachment_to_task(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.AttachmentObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def upload_attachment_to_task(connection, task_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query,
-      :"file" => :form
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query,
+      :file => :form
     }
+
     %{}
     |> method(:post)
     |> url("/tasks/#{task_gid}/attachments")
@@ -139,13 +150,13 @@ defmodule Asana.Api.Attachments do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.AttachmentObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.AttachmentObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

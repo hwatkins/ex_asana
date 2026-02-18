@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.WebhookObject do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => Asana.Model.Webhook.t | nil
-  }
+          :data => Asana.Model.Webhook.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.WebhookObject do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :struct, Asana.Model.Webhook, options)
+    |> deserialize(:data, :struct, Asana.Model.Webhook, options)
   end
 end
-

@@ -4,17 +4,17 @@
 
 defmodule Asana.Model.DependencyArrayData do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"dependencies"
+    :dependencies
   ]
 
   @type t :: %__MODULE__{
-    :"dependencies" => [integer()] | nil
-  }
+          :dependencies => [integer()] | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.DependencyArrayData do
@@ -22,4 +22,3 @@ defimpl Poison.Decoder, for: Asana.Model.DependencyArrayData do
     value
   end
 end
-

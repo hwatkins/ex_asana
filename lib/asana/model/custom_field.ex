@@ -9,33 +9,33 @@ defmodule Asana.Model.CustomField do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"description",
-    :"type",
-    :"enum_options",
-    :"precision",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"resource_subtype"
+    :description,
+    :type,
+    :enum_options,
+    :precision,
+    :id,
+    :gid,
+    :resource_type,
+    :resource_subtype
   ]
 
   @type t :: %__MODULE__{
-    :"description" => String.t | nil,
-    :"type" => String.t | nil,
-    :"enum_options" => [Asana.Model.EnumOption.t] | nil,
-    :"precision" => integer() | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"resource_subtype" => String.t | nil
-  }
+          :description => String.t() | nil,
+          :type => String.t() | nil,
+          :enum_options => [Asana.Model.EnumOption.t()] | nil,
+          :precision => integer() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :resource_subtype => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.CustomField do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"enum_options", :list, Asana.Model.EnumOption, options)
+    |> deserialize(:enum_options, :list, Asana.Model.EnumOption, options)
   end
 end
-

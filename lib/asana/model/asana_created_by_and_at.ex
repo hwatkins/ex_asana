@@ -4,26 +4,26 @@
 
 defmodule Asana.Model.AsanaCreatedByAndAt do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"created_by",
-    :"created_at"
+    :created_by,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"created_by" => User | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :created_by => User | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.AsanaCreatedByAndAt do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"created_by", :struct, Asana.Model.User, options)
+    |> deserialize(:created_by, :struct, Asana.Model.User, options)
   end
 end
-

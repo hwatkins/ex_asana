@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.BatchData do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"actions"
+    :actions
   ]
 
   @type t :: %__MODULE__{
-    :"actions" => [Asana.Model.BatchRequest.t] | nil
-  }
+          :actions => [Asana.Model.BatchRequest.t()] | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.BatchData do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"actions", :list, Asana.Model.BatchRequest, options)
+    |> deserialize(:actions, :list, Asana.Model.BatchRequest, options)
   end
 end
-

@@ -9,65 +9,65 @@ defmodule Asana.Model.Project do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"name",
-    :"archived",
-    :"color",
-    :"current_status",
-    :"custom_field_settings",
-    :"due_date",
-    :"followers",
-    :"html_notes",
-    :"layout",
-    :"members",
-    :"modified_at",
-    :"notes",
-    :"owner",
-    :"public",
-    :"start_on",
-    :"team",
-    :"workspace",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"created_at"
+    :name,
+    :archived,
+    :color,
+    :current_status,
+    :custom_field_settings,
+    :due_date,
+    :followers,
+    :html_notes,
+    :layout,
+    :members,
+    :modified_at,
+    :notes,
+    :owner,
+    :public,
+    :start_on,
+    :team,
+    :workspace,
+    :id,
+    :gid,
+    :resource_type,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"name" => String.t | nil,
-    :"archived" => boolean() | nil,
-    :"color" => String.t | nil,
-    :"current_status" => map() | nil,
-    :"custom_field_settings" => [Asana.Model.CustomFieldSettings.t] | nil,
-    :"due_date" => DateTime.t | nil,
-    :"followers" => [Asana.Model.User.t] | nil,
-    :"html_notes" => String.t | nil,
-    :"layout" => String.t | nil,
-    :"members" => [Asana.Model.User.t] | nil,
-    :"modified_at" => DateTime.t | nil,
-    :"notes" => String.t | nil,
-    :"owner" => UserCompact | nil,
-    :"public" => boolean() | nil,
-    :"start_on" => Date.t | nil,
-    :"team" => TeamCompact | nil,
-    :"workspace" => WorkspaceCompact | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :name => String.t() | nil,
+          :archived => boolean() | nil,
+          :color => String.t() | nil,
+          :current_status => map() | nil,
+          :custom_field_settings => [Asana.Model.CustomFieldSettings.t()] | nil,
+          :due_date => DateTime.t() | nil,
+          :followers => [Asana.Model.User.t()] | nil,
+          :html_notes => String.t() | nil,
+          :layout => String.t() | nil,
+          :members => [Asana.Model.User.t()] | nil,
+          :modified_at => DateTime.t() | nil,
+          :notes => String.t() | nil,
+          :owner => UserCompact | nil,
+          :public => boolean() | nil,
+          :start_on => Date.t() | nil,
+          :team => TeamCompact | nil,
+          :workspace => WorkspaceCompact | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Project do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"custom_field_settings", :list, Asana.Model.CustomFieldSettings, options)
-    |> deserialize(:"followers", :list, Asana.Model.User, options)
-    |> deserialize(:"members", :list, Asana.Model.User, options)
-    |> deserialize(:"owner", :struct, Asana.Model.UserCompact, options)
-    |> deserialize(:"start_on", :date, nil, options)
-    |> deserialize(:"team", :struct, Asana.Model.TeamCompact, options)
-    |> deserialize(:"workspace", :struct, Asana.Model.WorkspaceCompact, options)
+    |> deserialize(:custom_field_settings, :list, Asana.Model.CustomFieldSettings, options)
+    |> deserialize(:followers, :list, Asana.Model.User, options)
+    |> deserialize(:members, :list, Asana.Model.User, options)
+    |> deserialize(:owner, :struct, Asana.Model.UserCompact, options)
+    |> deserialize(:start_on, :date, nil, options)
+    |> deserialize(:team, :struct, Asana.Model.TeamCompact, options)
+    |> deserialize(:workspace, :struct, Asana.Model.WorkspaceCompact, options)
   end
 end
-

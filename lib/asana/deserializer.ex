@@ -10,29 +10,44 @@ defmodule Asana.Deserializer do
   @doc """
   Update the provided model with a deserialization of a nested value
   """
-  @spec deserialize(struct(), :atom, :atom, struct(), keyword()) :: struct()
+  @spec deserialize(struct(), :atom, :atom, struct(), keyword() | map()) :: struct()
   def deserialize(model, field, :list, mod, options) do
     model
-    |> Map.update!(field, &(Poison.Decode.decode(&1, Keyword.merge(options, [as: [struct(mod)]]))))
+    |> Map.update!(field, &Poison.Decode.transform(&1, merge_options(options, [struct(mod)])))
   end
+
   def deserialize(model, field, :struct, mod, options) do
     model
-    |> Map.update!(field, &(Poison.Decode.decode(&1, Keyword.merge(options, [as: struct(mod)]))))
+    |> Map.update!(field, &Poison.Decode.transform(&1, merge_options(options, struct(mod))))
   end
+
   def deserialize(model, field, :map, mod, options) do
     model
-    |> Map.update!(field, &(Map.new(&1, fn {key, val} -> {key, Poison.Decode.decode(val, Keyword.merge(options, [as: struct(mod)]))} end)))
+    |> Map.update!(field, fn values ->
+      Map.new(values, fn {key, val} ->
+        {key, Poison.Decode.transform(val, merge_options(options, struct(mod)))}
+      end)
+    end)
   end
+
   def deserialize(model, field, :date, _, _options) do
     value = Map.get(model, field)
+
     case is_binary(value) do
-      true -> case DateTime.from_iso8601(value) do
-                {:ok, datetime, _offset} ->
-                  Map.put(model, field, datetime)
-                _ ->
-                  model
-              end
-      false -> model
+      true ->
+        case DateTime.from_iso8601(value) do
+          {:ok, datetime, _offset} ->
+            Map.put(model, field, datetime)
+
+          _ ->
+            model
+        end
+
+      false ->
+        model
     end
   end
+
+  defp merge_options(options, as) when is_map(options), do: Map.put(options, :as, as)
+  defp merge_options(options, as) when is_list(options), do: Keyword.merge(options, as: as)
 end

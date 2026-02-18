@@ -9,31 +9,31 @@ defmodule Asana.Model.Event do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"user",
-    :"resource",
-    :"type",
-    :"action",
-    :"parent",
-    :"created_at"
+    :user,
+    :resource,
+    :type,
+    :action,
+    :parent,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"user" => UserCompact | nil,
-    :"resource" => Asana.Model.EventResource.t | nil,
-    :"type" => String.t | nil,
-    :"action" => String.t | nil,
-    :"parent" => AsanaNamedObject | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :user => UserCompact | nil,
+          :resource => Asana.Model.EventResource.t() | nil,
+          :type => String.t() | nil,
+          :action => String.t() | nil,
+          :parent => AsanaNamedObject | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Event do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"user", :struct, Asana.Model.UserCompact, options)
-    |> deserialize(:"resource", :struct, Asana.Model.EventResource, options)
-    |> deserialize(:"parent", :struct, Asana.Model.AsanaNamedObject, options)
+    |> deserialize(:user, :struct, Asana.Model.UserCompact, options)
+    |> deserialize(:resource, :struct, Asana.Model.EventResource, options)
+    |> deserialize(:parent, :struct, Asana.Model.AsanaNamedObject, options)
   end
 end
-

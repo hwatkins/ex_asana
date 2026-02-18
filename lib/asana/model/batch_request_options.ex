@@ -9,18 +9,18 @@ defmodule Asana.Model.BatchRequestOptions do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"limit",
-    :"offset",
-    :"fields",
-    :"expand"
+    :limit,
+    :offset,
+    :fields,
+    :expand
   ]
 
   @type t :: %__MODULE__{
-    :"limit" => integer() | nil,
-    :"offset" => integer() | nil,
-    :"fields" => [String.t] | nil,
-    :"expand" => String.t | nil
-  }
+          :limit => integer() | nil,
+          :offset => integer() | nil,
+          :fields => [String.t()] | nil,
+          :expand => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.BatchRequestOptions do
@@ -28,4 +28,3 @@ defimpl Poison.Decoder, for: Asana.Model.BatchRequestOptions do
     value
   end
 end
-

@@ -9,35 +9,35 @@ defmodule Asana.Model.CustomFieldSettings do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"is_important",
-    :"parent",
-    :"project",
-    :"custom_field",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"created_at"
+    :is_important,
+    :parent,
+    :project,
+    :custom_field,
+    :id,
+    :gid,
+    :resource_type,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"is_important" => boolean() | nil,
-    :"parent" => ProjectCompact | nil,
-    :"project" => ProjectCompact | nil,
-    :"custom_field" => CustomField | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :is_important => boolean() | nil,
+          :parent => ProjectCompact | nil,
+          :project => ProjectCompact | nil,
+          :custom_field => CustomField | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.CustomFieldSettings do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"parent", :struct, Asana.Model.ProjectCompact, options)
-    |> deserialize(:"project", :struct, Asana.Model.ProjectCompact, options)
-    |> deserialize(:"custom_field", :struct, Asana.Model.CustomField, options)
+    |> deserialize(:parent, :struct, Asana.Model.ProjectCompact, options)
+    |> deserialize(:project, :struct, Asana.Model.ProjectCompact, options)
+    |> deserialize(:custom_field, :struct, Asana.Model.CustomField, options)
   end
 end
-

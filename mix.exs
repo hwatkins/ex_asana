@@ -1,46 +1,50 @@
-defmodule Asana.Mixfile do
+defmodule Asana.MixProject do
   use Mix.Project
 
+  @version "1.0.0"
+  @source_url "https://github.com/hwatkins/ex_asana"
+
   def project do
-    [app: :asana,
-     version: "1.0.0",
-     elixir: "~> 1.6",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     package: package(),
-     description: "This is the interface for interacting with the [Asana Platform](https://asana.com/developers/).",
-     deps: deps()]
-  end
-
-  # Configuration for the OTP application
-  #
-  # Type "mix help compile.app" for more information
-  def application do
-    # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger]]
-  end
-
-  # Dependencies can be Hex packages:
-  #
-  #   {:my_dep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:my_dep, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.3.0"}
-  #
-  # Type "mix help deps" for more examples and options
-  defp deps do
     [
-      {:tesla, "~> 1.2"},
-      {:poison, "~> 3.0"}
+      app: :asana,
+      version: @version,
+      elixir: "~> 1.15",
+      start_permanent: Mix.env() == :prod,
+      package: package(),
+      description: "Interface for interacting with the Asana Platform REST API from Elixir.",
+      deps: deps(),
+      docs: docs(),
+      source_url: @source_url
     ]
   end
 
-   defp package() do
+  def application do
+    [extra_applications: [:logger]]
+  end
+
+  defp deps do
+    [
+      {:req, "~> 0.5"},
+      {:jason, "~> 1.4"},
+      {:poison, "~> 5.0"},
+      {:ex_doc, "~> 0.37", only: :dev, runtime: false},
+      {:plug, "~> 1.16", only: :test}
+    ]
+  end
+
+  defp package do
     [
       name: "asana",
-      files: ~w(lib mix.exs README* LICENSE*),
-      licenses: [""]
+      files: ~w(lib config mix.exs README* LICENSE*),
+      licenses: [],
+      links: %{"GitHub" => @source_url}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      extras: ["README.md"]
     ]
   end
 end

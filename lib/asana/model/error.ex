@@ -9,19 +9,19 @@ defmodule Asana.Model.Error do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"errors"
+    :errors
   ]
 
   @type t :: %__MODULE__{
-    :"errors" => [Asana.Model.ErrorErrors.t] | nil
-  }
+          :errors => [Asana.Model.ErrorErrors.t()] | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Error do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"errors", :list, Asana.Model.ErrorErrors, options)
+    |> deserialize(:errors, :list, Asana.Model.ErrorErrors, options)
   end
 end
-

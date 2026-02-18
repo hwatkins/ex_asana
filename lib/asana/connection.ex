@@ -4,119 +4,90 @@
 
 defmodule Asana.Connection do
   @moduledoc """
-  Handle Tesla connections for Asana.
+  Builds and executes Req-based HTTP connections for Asana.
   """
 
-  use Tesla
+  @type t :: Req.Request.t()
 
-  # Add any middleware here (authentication)
-  plug Tesla.Middleware.BaseUrl, "https://app.asana.com/api/1.0"
-  plug Tesla.Middleware.Headers, [{"user-agent", "Elixir"}]
-  plug Tesla.Middleware.EncodeJson, engine: Poison
-
-  @scopes [
-  ]
+  @base_url "https://app.asana.com/api/1.0"
+  @default_headers [{"user-agent", "elixir-asana"}]
+  @scopes []
 
   @doc """
-  Configure a client connection using a provided OAuth2 token as a Bearer token
-
-  ## Parameters
-
-  - token (String): Bearer token
-
-  ## Returns
-
-  Tesla.Env.client
+  Configure a connection using either a provided OAuth2 bearer token or a
+  token fetcher callback.
   """
-  @spec new(String.t) :: Tesla.Env.client
+  @spec new(String.t() | (list(String.t()) -> String.t())) :: t()
   def new(token) when is_binary(token) do
-    Tesla.client([
-      {Tesla.Middleware.Headers,  [{"authorization", "Bearer #{token}"}]}
-    ])
+    Req.new(
+      base_url: @base_url,
+      headers: @default_headers,
+      auth: {:bearer, token}
+    )
   end
 
-  @doc """
-  Configure a client connection using a function which yields a Bearer token.
-
-  ## Parameters
-
-  - token_fetcher (function arity of 1): Callback which provides an OAuth2 token
-    given a list of scopes
-
-  ## Returns
-
-  Tesla.Env.client
-  """
-  @spec new(((list(String.t)) -> String.t)) :: Tesla.Env.client
-  def new(token_fetcher) when is_function(token_fetcher) do
+  def new(token_fetcher) when is_function(token_fetcher, 1) do
     token_fetcher.(@scopes)
-    |> new
-  end
-  @scopes [
-  ]
-
-  @doc """
-  Configure a client connection using a provided OAuth2 token as a Bearer token
-
-  ## Parameters
-
-  - token (String): Bearer token
-
-  ## Returns
-
-  Tesla.Env.client
-  """
-  @spec new(String.t) :: Tesla.Env.client
-  def new(token) when is_binary(token) do
-    Tesla.client([
-      {Tesla.Middleware.Headers,  [{"authorization", "Bearer #{token}"}]}
-    ])
+    |> new()
   end
 
   @doc """
-  Configure a client connection using a function which yields a Bearer token.
-
-  ## Parameters
-
-  - token_fetcher (function arity of 1): Callback which provides an OAuth2 token
-    given a list of scopes
-
-  ## Returns
-
-  Tesla.Env.client
+  Configure a connection using basic auth credentials.
   """
-  @spec new(((list(String.t)) -> String.t)) :: Tesla.Env.client
-  def new(token_fetcher) when is_function(token_fetcher) do
-    token_fetcher.(@scopes)
-    |> new
+  @spec new(String.t(), String.t()) :: t()
+  def new(username, password) when is_binary(username) and is_binary(password) do
+    basic = "Basic " <> Base.encode64("#{username}:#{password}")
+
+    Req.new(
+      base_url: @base_url,
+      headers: [{"authorization", basic} | @default_headers]
+    )
   end
+
   @doc """
-  Configure a client connection using Basic authentication.
-
-  ## Parameters
-
-  - username (String): Username used for authentication
-  - password (String): Password used for authentication
-
-  # Returns
-
-  Tesla.Env.client
+  Configure an unauthenticated client connection.
   """
-  @spec new(String.t, String.t) :: Tesla.Env.client
-  def new(username, password) do
-    Tesla.client([
-      {Tesla.Middleware.BasicAuth, %{username: username, password: password}}
-    ])
-  end
-  @doc """
-  Configure an authless client connection
-
-  # Returns
-
-  Tesla.Env.client
-  """
-  @spec new() :: Tesla.Env.client
+  @spec new() :: t()
   def new do
-    Tesla.client([])
+    Req.new(base_url: @base_url, headers: @default_headers)
   end
+
+  @doc """
+  Executes a request option list produced by `Asana.RequestBuilder`.
+  """
+  @spec request(t(), keyword()) :: {:ok, Req.Response.t()} | {:error, term()}
+  def request(%Req.Request{} = connection, request_options) when is_list(request_options) do
+    {method, request_options} = Keyword.pop(request_options, :method, :get)
+    {url, request_options} = Keyword.pop(request_options, :url, "")
+    {query, request_options} = Keyword.pop(request_options, :query, [])
+    {headers, request_options} = Keyword.pop(request_options, :headers, [])
+    {body, request_options} = Keyword.pop(request_options, :body)
+    {form, request_options} = Keyword.pop(request_options, :form)
+    {multipart, request_options} = Keyword.pop(request_options, :form_multipart)
+
+    req_options =
+      request_options
+      |> Keyword.put(:method, method)
+      |> Keyword.put(:url, url)
+      |> maybe_put(:params, query)
+      |> maybe_put(:headers, headers)
+      |> maybe_put(:form, form)
+      |> maybe_put(:form_multipart, multipart)
+      |> maybe_put_body(body, form, multipart)
+
+    Req.request(connection, req_options)
+  end
+
+  defp maybe_put(options, _key, nil), do: options
+  defp maybe_put(options, _key, []), do: options
+  defp maybe_put(options, key, value), do: Keyword.put(options, key, value)
+
+  defp maybe_put_body(options, nil, _form, _multipart), do: options
+  defp maybe_put_body(options, _body, form, _multipart) when not is_nil(form), do: options
+  defp maybe_put_body(options, _body, _form, multipart) when not is_nil(multipart), do: options
+
+  defp maybe_put_body(options, body, _form, _multipart) when is_binary(body),
+    do: Keyword.put(options, :body, body)
+
+  defp maybe_put_body(options, body, _form, _multipart), do: Keyword.put(options, :json, body)
 end

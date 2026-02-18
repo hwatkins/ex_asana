@@ -9,30 +9,30 @@ defmodule Asana.Model.ProjectMembership do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"user",
-    :"project",
-    :"write_access",
-    :"id",
-    :"gid",
-    :"resource_type"
+    :user,
+    :project,
+    :write_access,
+    :id,
+    :gid,
+    :resource_type
   ]
 
   @type t :: %__MODULE__{
-    :"user" => Asana.Model.UserCompact.t | nil,
-    :"project" => Asana.Model.ProjectCompact.t | nil,
-    :"write_access" => String.t | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil
-  }
+          :user => Asana.Model.UserCompact.t() | nil,
+          :project => Asana.Model.ProjectCompact.t() | nil,
+          :write_access => String.t() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.ProjectMembership do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"user", :struct, Asana.Model.UserCompact, options)
-    |> deserialize(:"project", :struct, Asana.Model.ProjectCompact, options)
+    |> deserialize(:user, :struct, Asana.Model.UserCompact, options)
+    |> deserialize(:project, :struct, Asana.Model.ProjectCompact, options)
   end
 end
-

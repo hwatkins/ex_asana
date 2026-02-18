@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.UserObject do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => Asana.Model.User.t | nil
-  }
+          :data => Asana.Model.User.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.UserObject do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :struct, Asana.Model.User, options)
+    |> deserialize(:data, :struct, Asana.Model.User, options)
   end
 end
-

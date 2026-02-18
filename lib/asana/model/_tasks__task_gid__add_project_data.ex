@@ -4,23 +4,23 @@
 
 defmodule Asana.Model.TasksTaskGidAddProjectData do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"project",
-    :"insert_after",
-    :"insert_before",
-    :"section"
+    :project,
+    :insert_after,
+    :insert_before,
+    :section
   ]
 
   @type t :: %__MODULE__{
-    :"project" => integer(),
-    :"insert_after" => integer() | nil,
-    :"insert_before" => integer() | nil,
-    :"section" => integer() | nil
-  }
+          :project => integer(),
+          :insert_after => integer() | nil,
+          :insert_before => integer() | nil,
+          :section => integer() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.TasksTaskGidAddProjectData do
@@ -28,4 +28,3 @@ defimpl Poison.Decoder, for: Asana.Model.TasksTaskGidAddProjectData do
     value
   end
 end
-

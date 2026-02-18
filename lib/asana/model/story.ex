@@ -9,48 +9,48 @@ defmodule Asana.Model.Story do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"html_text",
-    :"is_edited",
-    :"is_pinned",
-    :"liked",
-    :"likes",
-    :"num_likes",
-    :"source",
-    :"target",
-    :"text",
-    :"type",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"resource_subtype",
-    :"created_at"
+    :html_text,
+    :is_edited,
+    :is_pinned,
+    :liked,
+    :likes,
+    :num_likes,
+    :source,
+    :target,
+    :text,
+    :type,
+    :id,
+    :gid,
+    :resource_type,
+    :resource_subtype,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"html_text" => String.t | nil,
-    :"is_edited" => boolean() | nil,
-    :"is_pinned" => boolean() | nil,
-    :"liked" => boolean() | nil,
-    :"likes" => [Asana.Model.User.t] | nil,
-    :"num_likes" => integer() | nil,
-    :"source" => String.t | nil,
-    :"target" => map() | nil,
-    :"text" => AnyType | nil,
-    :"type" => String.t | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"resource_subtype" => String.t | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :html_text => String.t() | nil,
+          :is_edited => boolean() | nil,
+          :is_pinned => boolean() | nil,
+          :liked => boolean() | nil,
+          :likes => [Asana.Model.User.t()] | nil,
+          :num_likes => integer() | nil,
+          :source => String.t() | nil,
+          :target => map() | nil,
+          :text => AnyType | nil,
+          :type => String.t() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :resource_subtype => String.t() | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Story do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"likes", :list, Asana.Model.User, options)
-    |> deserialize(:"text", :struct, Asana.Model.AnyType, options)
+    |> deserialize(:likes, :list, Asana.Model.User, options)
+    |> deserialize(:text, :struct, Asana.Model.AnyType, options)
   end
 end
-

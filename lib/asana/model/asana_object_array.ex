@@ -9,19 +9,19 @@ defmodule Asana.Model.AsanaObjectArray do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => [Asana.Model.AsanaNamedObject.t] | nil
-  }
+          :data => [Asana.Model.AsanaNamedObject.t()] | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.AsanaObjectArray do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :list, Asana.Model.AsanaNamedObject, options)
+    |> deserialize(:data, :list, Asana.Model.AsanaNamedObject, options)
   end
 end
-

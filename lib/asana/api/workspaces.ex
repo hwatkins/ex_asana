@@ -10,7 +10,6 @@ defmodule Asana.Api.Workspaces do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Add a user to a workspace or organization
   Add a user to a workspace or organization. The user can be referenced by their globally unique user ID or their email address. Returns the full user record for the invited user.
@@ -29,17 +28,26 @@ defmodule Asana.Api.Workspaces do
   ## Returns
 
   {:ok, Asana.Model.UserObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec add_user_to_workspace(Tesla.Env.client, String.t, Asana.Model.UserIdObject.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.UserObject.t} | {:error, Tesla.Env.t}
+  @spec add_user_to_workspace(
+          Asana.Connection.t(),
+          String.t(),
+          Asana.Model.UserIdObject.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.UserObject.t()}
+          | {:error, Req.Response.t()}
   def add_user_to_workspace(connection, workspace_gid, user_id_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/workspaces/#{workspace_gid}/addUser")
@@ -48,13 +56,13 @@ defmodule Asana.Api.Workspaces do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.UserObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.UserObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -74,17 +82,21 @@ defmodule Asana.Api.Workspaces do
   ## Returns
 
   {:ok, Asana.Model.WorkspaceArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_all_workspaces(Tesla.Env.client, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.WorkspaceArray.t} | {:error, Tesla.Env.t}
+  @spec get_all_workspaces(Asana.Connection.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.WorkspaceArray.t()}
+          | {:error, Req.Response.t()}
   def get_all_workspaces(connection, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/workspaces")
@@ -92,13 +104,13 @@ defmodule Asana.Api.Workspaces do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.WorkspaceArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.WorkspaceArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -122,34 +134,38 @@ defmodule Asana.Api.Workspaces do
   ## Returns
 
   {:ok, Asana.Model.AsanaObjectArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_typeahead(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, Asana.Model.AsanaObjectArray.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_typeahead(Asana.Connection.t(), String.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.AsanaObjectArray.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_typeahead(connection, workspace_gid, type, opts \\ []) do
     optional_params = %{
-      :"query" => :query,
-      :"count" => :query,
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :query => :query,
+      :count => :query,
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/workspaces/#{workspace_gid}/typeahead")
-    |> add_param(:query, :"type", type)
+    |> add_param(:query, :type, type)
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.AsanaObjectArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.AsanaObjectArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -170,17 +186,21 @@ defmodule Asana.Api.Workspaces do
   ## Returns
 
   {:ok, Asana.Model.WorkspaceObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_workspace(Tesla.Env.client, String.t, keyword()) :: {:ok, Asana.Model.WorkspaceObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec get_workspace(Asana.Connection.t(), String.t(), keyword()) ::
+          {:ok, Asana.Model.WorkspaceObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def get_workspace(connection, workspace_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/workspaces/#{workspace_gid}")
@@ -188,13 +208,13 @@ defmodule Asana.Api.Workspaces do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.WorkspaceObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.WorkspaceObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -216,17 +236,23 @@ defmodule Asana.Api.Workspaces do
   ## Returns
 
   {:ok, map()} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec remove_user_to_workspace(Tesla.Env.client, String.t, Asana.Model.UserIdObject.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Map.t} | {:error, Tesla.Env.t}
+  @spec remove_user_to_workspace(
+          Asana.Connection.t(),
+          String.t(),
+          Asana.Model.UserIdObject.t(),
+          keyword()
+        ) :: {:ok, Asana.Model.Error.t()} | {:ok, Map.t()} | {:error, Req.Response.t()}
   def remove_user_to_workspace(connection, workspace_gid, user_id_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/workspaces/#{workspace_gid}/removeUser")
@@ -235,13 +261,13 @@ defmodule Asana.Api.Workspaces do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -263,17 +289,26 @@ defmodule Asana.Api.Workspaces do
   ## Returns
 
   {:ok, Asana.Model.WorkspaceObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec update_workspace(Tesla.Env.client, String.t, Asana.Model.WorkspaceObject.t, keyword()) :: {:ok, Asana.Model.WorkspaceObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
+  @spec update_workspace(
+          Asana.Connection.t(),
+          String.t(),
+          Asana.Model.WorkspaceObject.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.WorkspaceObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
   def update_workspace(connection, workspace_gid, workspace_object, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:put)
     |> url("/workspaces/#{workspace_gid}")
@@ -282,13 +317,13 @@ defmodule Asana.Api.Workspaces do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.WorkspaceObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.WorkspaceObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

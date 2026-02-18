@@ -4,21 +4,21 @@
 
 defmodule Asana.Model.ProjectCompact do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"resource_type",
-    :"id",
-    :"gid"
+    :resource_type,
+    :id,
+    :gid
   ]
 
   @type t :: %__MODULE__{
-    :"resource_type" => String.t | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil
-  }
+          :resource_type => String.t() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.ProjectCompact do
@@ -26,4 +26,3 @@ defimpl Poison.Decoder, for: Asana.Model.ProjectCompact do
     value
   end
 end
-

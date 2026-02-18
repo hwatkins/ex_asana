@@ -4,17 +4,17 @@
 
 defmodule Asana.Model.TasksTaskGidAddFollowersData do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"followers"
+    :followers
   ]
 
   @type t :: %__MODULE__{
-    :"followers" => [integer()]
-  }
+          :followers => [integer()]
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.TasksTaskGidAddFollowersData do
@@ -22,4 +22,3 @@ defimpl Poison.Decoder, for: Asana.Model.TasksTaskGidAddFollowersData do
     value
   end
 end
-

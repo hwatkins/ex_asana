@@ -4,17 +4,17 @@
 
 defmodule Asana.Model.AsanaSubtype do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"resource_subtype"
+    :resource_subtype
   ]
 
   @type t :: %__MODULE__{
-    :"resource_subtype" => String.t | nil
-  }
+          :resource_subtype => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.AsanaSubtype do
@@ -22,4 +22,3 @@ defimpl Poison.Decoder, for: Asana.Model.AsanaSubtype do
     value
   end
 end
-

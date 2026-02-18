@@ -4,23 +4,23 @@
 
 defmodule Asana.Model.ProjectsData do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"name",
-    :"notes",
-    :"workspace",
-    :"team"
+    :name,
+    :notes,
+    :workspace,
+    :team
   ]
 
   @type t :: %__MODULE__{
-    :"name" => String.t | nil,
-    :"notes" => String.t | nil,
-    :"workspace" => integer() | nil,
-    :"team" => integer() | nil
-  }
+          :name => String.t() | nil,
+          :notes => String.t() | nil,
+          :workspace => integer() | nil,
+          :team => integer() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.ProjectsData do
@@ -28,4 +28,3 @@ defimpl Poison.Decoder, for: Asana.Model.ProjectsData do
     value
   end
 end
-

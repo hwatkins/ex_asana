@@ -9,35 +9,35 @@ defmodule Asana.Model.Attachment do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"download_url",
-    :"host",
-    :"name",
-    :"parent",
-    :"view_url",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"created_at"
+    :download_url,
+    :host,
+    :name,
+    :parent,
+    :view_url,
+    :id,
+    :gid,
+    :resource_type,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"download_url" => String.t | nil,
-    :"host" => String.t | nil,
-    :"name" => String.t | nil,
-    :"parent" => TaskCompact | nil,
-    :"view_url" => String.t | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :download_url => String.t() | nil,
+          :host => String.t() | nil,
+          :name => String.t() | nil,
+          :parent => TaskCompact | nil,
+          :view_url => String.t() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Attachment do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"parent", :struct, Asana.Model.TaskCompact, options)
+    |> deserialize(:parent, :struct, Asana.Model.TaskCompact, options)
   end
 end
-

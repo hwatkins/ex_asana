@@ -4,23 +4,23 @@
 
 defmodule Asana.Model.InlineObject9 do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"project",
-    :"section",
-    :"before_section",
-    :"after_section"
+    :project,
+    :section,
+    :before_section,
+    :after_section
   ]
 
   @type t :: %__MODULE__{
-    :"project" => integer(),
-    :"section" => integer(),
-    :"before_section" => integer(),
-    :"after_section" => integer()
-  }
+          :project => integer(),
+          :section => integer(),
+          :before_section => integer(),
+          :after_section => integer()
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.InlineObject9 do
@@ -28,4 +28,3 @@ defimpl Poison.Decoder, for: Asana.Model.InlineObject9 do
     value
   end
 end
-

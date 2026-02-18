@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.InlineObject7 do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => Asana.Model.ProjectsData.t | nil
-  }
+          :data => Asana.Model.ProjectsData.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.InlineObject7 do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :struct, Asana.Model.ProjectsData, options)
+    |> deserialize(:data, :struct, Asana.Model.ProjectsData, options)
   end
 end
-

@@ -9,12 +9,12 @@ defmodule Asana.Model.EmptyObject do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => map() | nil
-  }
+          :data => map() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.EmptyObject do
@@ -22,4 +22,3 @@ defimpl Poison.Decoder, for: Asana.Model.EmptyObject do
     value
   end
 end
-

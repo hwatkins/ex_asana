@@ -10,7 +10,6 @@ defmodule Asana.Api.OrganizationExports do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Create an organization export request
   This method creates a request to export an Organization. Asana will complete the export at some point after you create the request.
@@ -28,17 +27,21 @@ defmodule Asana.Api.OrganizationExports do
   ## Returns
 
   {:ok, Asana.Model.OrganizationExportObjectResponse.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_organization_export(Tesla.Env.client, Asana.Model.InlineObject5.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.OrganizationExportObjectResponse.t} | {:error, Tesla.Env.t}
+  @spec create_organization_export(Asana.Connection.t(), Asana.Model.InlineObject5.t(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.OrganizationExportObjectResponse.t()}
+          | {:error, Req.Response.t()}
   def create_organization_export(connection, inline_object5, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:post)
     |> url("/organization_exports")
@@ -47,13 +50,13 @@ defmodule Asana.Api.OrganizationExports do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.OrganizationExportObjectResponse{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.OrganizationExportObjectResponse{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -74,17 +77,21 @@ defmodule Asana.Api.OrganizationExports do
   ## Returns
 
   {:ok, Asana.Model.OrganizationExportObjectResponse.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_organization_export(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.OrganizationExportObjectResponse.t} | {:error, Tesla.Env.t}
+  @spec get_organization_export(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.OrganizationExportObjectResponse.t()}
+          | {:error, Req.Response.t()}
   def get_organization_export(connection, organization_export_gid, opts \\ []) do
     optional_params = %{
-      :"opt_pretty" => :query,
-      :"opt_fields" => :query,
-      :"opt_expand" => :query,
-      :"limit" => :query,
-      :"offset" => :query
+      :opt_pretty => :query,
+      :opt_fields => :query,
+      :opt_expand => :query,
+      :limit => :query,
+      :offset => :query
     }
+
     %{}
     |> method(:get)
     |> url("/organization_exports/#{organization_export_gid}")
@@ -92,13 +99,13 @@ defmodule Asana.Api.OrganizationExports do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.OrganizationExportObjectResponse{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.OrganizationExportObjectResponse{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

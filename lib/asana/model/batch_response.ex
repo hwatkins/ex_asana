@@ -9,16 +9,16 @@ defmodule Asana.Model.BatchResponse do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"status_code",
-    :"headers",
-    :"body"
+    :status_code,
+    :headers,
+    :body
   ]
 
   @type t :: %__MODULE__{
-    :"status_code" => integer() | nil,
-    :"headers" => map() | nil,
-    :"body" => map() | nil
-  }
+          :status_code => integer() | nil,
+          :headers => map() | nil,
+          :body => map() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.BatchResponse do
@@ -26,4 +26,3 @@ defimpl Poison.Decoder, for: Asana.Model.BatchResponse do
     value
   end
 end
-

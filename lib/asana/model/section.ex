@@ -9,29 +9,29 @@ defmodule Asana.Model.Section do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"name",
-    :"project",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"created_at"
+    :name,
+    :project,
+    :id,
+    :gid,
+    :resource_type,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"name" => String.t | nil,
-    :"project" => ProjectCompact | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :name => String.t() | nil,
+          :project => ProjectCompact | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.Section do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"project", :struct, Asana.Model.ProjectCompact, options)
+    |> deserialize(:project, :struct, Asana.Model.ProjectCompact, options)
   end
 end
-

@@ -10,7 +10,6 @@ defmodule Asana.Api.ProjectStatuses do
   alias Asana.Connection
   import Asana.RequestBuilder
 
-
   @doc """
   Create a project status
   Creates a new status update on the project. Returns the full record of the newly created project status update.
@@ -24,9 +23,17 @@ defmodule Asana.Api.ProjectStatuses do
   ## Returns
 
   {:ok, Asana.Model.ProjectStatusObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec create_project_status(Tesla.Env.client, integer(), Asana.Model.InlineObject6.t, keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectStatusObject.t} | {:error, Tesla.Env.t}
+  @spec create_project_status(
+          Asana.Connection.t(),
+          integer(),
+          Asana.Model.InlineObject6.t(),
+          keyword()
+        ) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectStatusObject.t()}
+          | {:error, Req.Response.t()}
   def create_project_status(connection, project_gid, inline_object6, _opts \\ []) do
     %{}
     |> method(:post)
@@ -35,13 +42,13 @@ defmodule Asana.Api.ProjectStatuses do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %Asana.Model.ProjectStatusObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {201, %Asana.Model.ProjectStatusObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -58,23 +65,26 @@ defmodule Asana.Api.ProjectStatuses do
   ## Returns
 
   {:ok, Asana.Model.EmptyObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec delete_product_status(Tesla.Env.client, integer(), integer(), keyword()) :: {:ok, Asana.Model.EmptyObject.t} | {:ok, Asana.Model.Error.t} | {:error, Tesla.Env.t}
-  def delete_product_status(connection, project_gid, project_status_gid, _opts \\ []) do
+  @spec delete_product_status(Asana.Connection.t(), integer(), integer(), keyword()) ::
+          {:ok, Asana.Model.EmptyObject.t()}
+          | {:ok, Asana.Model.Error.t()}
+          | {:error, Req.Response.t()}
+  def delete_product_status(connection, _project_gid, project_status_gid, _opts \\ []) do
     %{}
     |> method(:delete)
     |> url("/project_statuses/#{project_status_gid}")
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.EmptyObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.EmptyObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -91,23 +101,26 @@ defmodule Asana.Api.ProjectStatuses do
   ## Returns
 
   {:ok, Asana.Model.ProjectStatusObject.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_product_status(Tesla.Env.client, integer(), integer(), keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectStatusObject.t} | {:error, Tesla.Env.t}
-  def get_product_status(connection, project_gid, project_status_gid, _opts \\ []) do
+  @spec get_product_status(Asana.Connection.t(), integer(), integer(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectStatusObject.t()}
+          | {:error, Req.Response.t()}
+  def get_product_status(connection, _project_gid, project_status_gid, _opts \\ []) do
     %{}
     |> method(:get)
     |> url("/project_statuses/#{project_status_gid}")
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectStatusObject{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectStatusObject{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 
@@ -123,9 +136,12 @@ defmodule Asana.Api.ProjectStatuses do
   ## Returns
 
   {:ok, Asana.Model.ProjectStatusArray.t} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec get_product_statuses(Tesla.Env.client, integer(), keyword()) :: {:ok, Asana.Model.Error.t} | {:ok, Asana.Model.ProjectStatusArray.t} | {:error, Tesla.Env.t}
+  @spec get_product_statuses(Asana.Connection.t(), integer(), keyword()) ::
+          {:ok, Asana.Model.Error.t()}
+          | {:ok, Asana.Model.ProjectStatusArray.t()}
+          | {:error, Req.Response.t()}
   def get_product_statuses(connection, project_gid, _opts \\ []) do
     %{}
     |> method(:get)
@@ -133,13 +149,13 @@ defmodule Asana.Api.ProjectStatuses do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 200, %Asana.Model.ProjectStatusArray{}},
-      { 400, %Asana.Model.Error{}},
-      { 401, %Asana.Model.Error{}},
-      { 403, %Asana.Model.Error{}},
-      { 404, %Asana.Model.Error{}},
-      { "5XX", %Asana.Model.Error{}},
-      { :default, %Asana.Model.Error{}}
+      {200, %Asana.Model.ProjectStatusArray{}},
+      {400, %Asana.Model.Error{}},
+      {401, %Asana.Model.Error{}},
+      {403, %Asana.Model.Error{}},
+      {404, %Asana.Model.Error{}},
+      {"5XX", %Asana.Model.Error{}},
+      {:default, %Asana.Model.Error{}}
     ])
   end
 end

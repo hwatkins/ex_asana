@@ -9,24 +9,24 @@ defmodule Asana.Model.OrganizationExport do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"download_url",
-    :"state",
-    :"organization",
-    :"id",
-    :"gid",
-    :"resource_type",
-    :"created_at"
+    :download_url,
+    :state,
+    :organization,
+    :id,
+    :gid,
+    :resource_type,
+    :created_at
   ]
 
   @type t :: %__MODULE__{
-    :"download_url" => String.t | nil,
-    :"state" => String.t | nil,
-    :"organization" => map() | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil,
-    :"created_at" => DateTime.t | nil
-  }
+          :download_url => String.t() | nil,
+          :state => String.t() | nil,
+          :organization => map() | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil,
+          :created_at => DateTime.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.OrganizationExport do
@@ -34,4 +34,3 @@ defimpl Poison.Decoder, for: Asana.Model.OrganizationExport do
     value
   end
 end
-

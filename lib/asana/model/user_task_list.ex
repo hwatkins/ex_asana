@@ -9,28 +9,28 @@ defmodule Asana.Model.UserTaskList do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"owner",
-    :"workspace",
-    :"id",
-    :"gid",
-    :"resource_type"
+    :owner,
+    :workspace,
+    :id,
+    :gid,
+    :resource_type
   ]
 
   @type t :: %__MODULE__{
-    :"owner" => UserCompact | nil,
-    :"workspace" => WorkspaceCompact | nil,
-    :"id" => integer() | nil,
-    :"gid" => integer() | nil,
-    :"resource_type" => String.t | nil
-  }
+          :owner => UserCompact | nil,
+          :workspace => WorkspaceCompact | nil,
+          :id => integer() | nil,
+          :gid => integer() | nil,
+          :resource_type => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.UserTaskList do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"owner", :struct, Asana.Model.UserCompact, options)
-    |> deserialize(:"workspace", :struct, Asana.Model.WorkspaceCompact, options)
+    |> deserialize(:owner, :struct, Asana.Model.UserCompact, options)
+    |> deserialize(:workspace, :struct, Asana.Model.WorkspaceCompact, options)
   end
 end
-

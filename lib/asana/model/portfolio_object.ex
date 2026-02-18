@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.PortfolioObject do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => Asana.Model.Portfolio.t | nil
-  }
+          :data => Asana.Model.Portfolio.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.PortfolioObject do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :struct, Asana.Model.Portfolio, options)
+    |> deserialize(:data, :struct, Asana.Model.Portfolio, options)
   end
 end
-

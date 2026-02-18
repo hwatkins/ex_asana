@@ -9,25 +9,25 @@ defmodule Asana.Model.BatchRequest do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"relative_path",
-    :"method",
-    :"data",
-    :"options"
+    :relative_path,
+    :method,
+    :data,
+    :options
   ]
 
   @type t :: %__MODULE__{
-    :"relative_path" => String.t,
-    :"method" => String.t,
-    :"data" => map() | nil,
-    :"options" => Asana.Model.BatchRequestOptions.t | nil
-  }
+          :relative_path => String.t(),
+          :method => String.t(),
+          :data => map() | nil,
+          :options => Asana.Model.BatchRequestOptions.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.BatchRequest do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"options", :struct, Asana.Model.BatchRequestOptions, options)
+    |> deserialize(:options, :struct, Asana.Model.BatchRequestOptions, options)
   end
 end
-

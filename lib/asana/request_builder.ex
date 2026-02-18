@@ -4,162 +4,126 @@
 
 defmodule Asana.RequestBuilder do
   @moduledoc """
-  Helper functions for building Tesla requests
+  Helper functions for building Req requests.
   """
 
   @doc """
-  Specify the request method when building a request
-
-  ## Parameters
-
-  - request (Map) - Collected request options
-  - m (atom) - Request method
-
-  ## Returns
-
-  Map
+  Specify the request method when building a request.
   """
-  @spec method(map(), atom) :: map()
-  def method(request, m) do
-    Map.put_new(request, :method, m)
-  end
+  @spec method(map(), atom()) :: map()
+  def method(request, m), do: Map.put_new(request, :method, m)
 
   @doc """
-  Specify the request method when building a request
-
-  ## Parameters
-
-  - request (Map) - Collected request options
-  - u (String) - Request URL
-
-  ## Returns
-
-  Map
+  Specify the request URL when building a request.
   """
-  @spec url(map(), String.t) :: map()
-  def url(request, u) do
-    Map.put_new(request, :url, u)
-  end
+  @spec url(map(), String.t()) :: map()
+  def url(request, u), do: Map.put_new(request, :url, u)
 
   @doc """
-  Add optional parameters to the request
-
-  ## Parameters
-
-  - request (Map) - Collected request options
-  - definitions (Map) - Map of parameter name to parameter location.
-  - options (KeywordList) - The provided optional parameters
-
-  ## Returns
-
-  Map
+  Add optional parameters to the request.
   """
-  @spec add_optional_params(map(), %{optional(atom) => atom}, keyword()) :: map()
+  @spec add_optional_params(map(), %{optional(atom()) => atom()}, keyword()) :: map()
   def add_optional_params(request, _, []), do: request
+
   def add_optional_params(request, definitions, [{key, value} | tail]) do
     case definitions do
       %{^key => location} ->
         request
         |> add_param(location, key, value)
         |> add_optional_params(definitions, tail)
+
       _ ->
         add_optional_params(request, definitions, tail)
     end
   end
 
   @doc """
-  Add optional parameters to the request
-
-  ## Parameters
-
-  - request (Map) - Collected request options
-  - location (atom) - Where to put the parameter
-  - key (atom) - The name of the parameter
-  - value (any) - The value of the parameter
-
-  ## Returns
-
-  Map
+  Add a parameter to a request.
   """
-  @spec add_param(map(), atom, atom, any()) :: map()
+  @spec add_param(map(), atom(), atom(), any()) :: map()
   def add_param(request, :body, :body, value), do: Map.put(request, :body, value)
+
   def add_param(request, :body, key, value) do
-    request
-    |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
-    |> Map.update!(:body, &(Tesla.Multipart.add_field(&1, key, Poison.encode!(value), headers: [{:"Content-Type", "application/json"}])))
+    field = {to_string(key), Poison.encode!(value)}
+    Map.update(request, :form_multipart, [field], &(&1 ++ [field]))
   end
+
   def add_param(request, :headers, key, value) do
-    request
-    |> Tesla.put_header(key, value)
+    header = {to_string(key), to_string(value)}
+    Map.update(request, :headers, [header], &(&1 ++ [header]))
   end
+
   def add_param(request, :file, name, path) do
-    request
-    |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
-    |> Map.update!(:body, &(Tesla.Multipart.add_file(&1, path, name: name)))
+    field = {name, {:file, path}}
+    Map.update(request, :form_multipart, [field], &(&1 ++ [field]))
   end
+
   def add_param(request, :form, name, value) do
-    request
-    |> Map.update(:body, %{name => value}, &(Map.put(&1, name, value)))
+    Map.update(request, :form, %{name => value}, &Map.put(&1, name, value))
   end
+
   def add_param(request, location, key, value) do
     Map.update(request, location, [{key, value}], &(&1 ++ [{key, value}]))
   end
 
   @doc """
-  Due to a bug in httpc, POST, PATCH and PUT requests will fail, if the body is empty
-
-  This function will ensure, that the body param is always set
-
-  ## Parameters
-
-  - request (Map) - Collected request options
-
-  ## Returns
-
-  Map
+  Preserve compatibility with generated request pipelines that call `ensure_body/1`.
   """
   @spec ensure_body(map()) :: map()
-  def ensure_body(%{body: nil} = request) do
-    %{request | body: ""}
-  end
-
-  def ensure_body(request) do
-    Map.put_new(request, :body, "")
-  end
+  def ensure_body(%{body: nil} = request), do: %{request | body: ""}
+  def ensure_body(request), do: Map.put_new(request, :body, "")
 
   @doc """
-  Handle the response for a Tesla request
-
-  ## Parameters
-
-  - arg1 (Tesla.Env.t | term) - The response object
-  - arg2 (:false | struct | [struct]) - The shape of the struct to deserialize into
-
-  ## Returns
-
-  {:ok, struct} on success
-  {:error, term} on failure
+  Decode a Req response into the expected model struct.
   """
-  @spec decode(Tesla.Env.t() | term(), false | struct() | [struct()]) ::
-          {:ok, struct()} | {:ok, Tesla.Env.t()} | {:error, any}
-  def decode(%Tesla.Env{} = env, false), do: {:ok, env}
-  def decode(%Tesla.Env{body: body}, struct), do: Poison.decode(body, as: struct)
+  @spec decode(Req.Response.t() | term(), false | struct() | [struct()]) ::
+          {:ok, struct()} | {:ok, Req.Response.t()} | {:error, any()}
+  def decode(%Req.Response{} = response, false), do: {:ok, response}
+  def decode(%Req.Response{body: body}, struct), do: decode_body(body, struct)
 
-  def evaluate_response({:ok, %Tesla.Env{} = env}, mapping) do
-    resolve_mapping(env, mapping)
+  @spec evaluate_response({:ok, Req.Response.t()} | {:error, any()}, list()) ::
+          {:ok, any()} | {:error, any()}
+  def evaluate_response({:ok, %Req.Response{} = response}, mapping) do
+    resolve_mapping(response, mapping)
   end
 
   def evaluate_response({:error, _} = error, _), do: error
 
-  def resolve_mapping(env, mapping, default \\ nil)
+  @spec resolve_mapping(Req.Response.t(), list(), any()) :: {:ok, any()} | {:error, any()}
+  def resolve_mapping(response, mapping, default \\ nil)
 
-  def resolve_mapping(%Tesla.Env{status: status} = env, [{mapping_status, struct} | _], _)
-      when status == mapping_status do
-    decode(env, struct)
+  def resolve_mapping(
+        %Req.Response{status: status} = response,
+        [{mapping_status, struct} | _],
+        _
+      )
+      when is_integer(mapping_status) and status == mapping_status do
+    decode(response, struct)
   end
 
-  def resolve_mapping(env, [{:default, struct} | tail], _), do: resolve_mapping(env, tail, struct)
-  def resolve_mapping(env, [_ | tail], struct), do: resolve_mapping(env, tail, struct)
-  def resolve_mapping(env, [], nil), do: {:error, env}
-  def resolve_mapping(env, [], struct), do: decode(env, struct)
+  def resolve_mapping(
+        %Req.Response{status: status} = response,
+        [{"5XX", struct} | _],
+        _
+      )
+      when status >= 500 and status <= 599 do
+    decode(response, struct)
+  end
+
+  def resolve_mapping(response, [{:default, struct} | tail], _),
+    do: resolve_mapping(response, tail, struct)
+
+  def resolve_mapping(response, [_ | tail], struct), do: resolve_mapping(response, tail, struct)
+  def resolve_mapping(response, [], nil), do: {:error, response}
+  def resolve_mapping(response, [], struct), do: decode(response, struct)
+
+  defp decode_body(body, struct) when is_binary(body), do: Poison.decode(body, as: struct)
+
+  defp decode_body(body, struct) when is_map(body) or is_list(body) do
+    body
+    |> Poison.encode!()
+    |> Poison.decode(as: struct)
+  end
+
+  defp decode_body(body, _struct), do: {:error, {:unexpected_response_body, body}}
 end

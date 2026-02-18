@@ -4,21 +4,21 @@
 
 defmodule Asana.Model.TasksTaskGidSetParentData do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"parent",
-    :"insert_after",
-    :"insert_before"
+    :parent,
+    :insert_after,
+    :insert_before
   ]
 
   @type t :: %__MODULE__{
-    :"parent" => integer(),
-    :"insert_after" => integer() | nil,
-    :"insert_before" => integer() | nil
-  }
+          :parent => integer(),
+          :insert_after => integer() | nil,
+          :insert_before => integer() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.TasksTaskGidSetParentData do
@@ -26,4 +26,3 @@ defimpl Poison.Decoder, for: Asana.Model.TasksTaskGidSetParentData do
     value
   end
 end
-

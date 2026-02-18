@@ -4,24 +4,24 @@
 
 defmodule Asana.Model.InlineObject1 do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :"data"
+    :data
   ]
 
   @type t :: %__MODULE__{
-    :"data" => CustomField | nil
-  }
+          :data => CustomField | nil
+        }
 end
 
 defimpl Poison.Decoder, for: Asana.Model.InlineObject1 do
   import Asana.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:"data", :struct, Asana.Model.CustomField, options)
+    |> deserialize(:data, :struct, Asana.Model.CustomField, options)
   end
 end
-
