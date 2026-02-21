@@ -13,9 +13,6 @@ jobs:
     permissions:
       contents: read
 
-    env:
-      MIX_ENV: prod
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,9 +29,13 @@ jobs:
           mix local.rebar --force
 
       - name: Install dependencies
+        env:
+          MIX_ENV: test
         run: mix deps.get
 
       - name: Run tests
+        env:
+          MIX_ENV: test
         run: mix test
 
       - name: Verify tag matches mix.exs version
@@ -65,4 +66,5 @@ jobs:
       - name: Publish package to Hex.pm
         env:
           HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+          MIX_ENV: prod
         run: mix hex.publish --yes
