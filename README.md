@@ -129,6 +129,13 @@ valid? = Asana.Webhook.Signature.valid?(signature_header, webhook_secret, raw_bo
 - `guides/v0_1_scope.md`
 - `guides/spec_update_workflow.md`
 
+## Project policies
+
+- `CONTRIBUTING.md`
+- `CODE_OF_CONDUCT.md`
+- `SECURITY.md`
+- `SUPPORT.md`
+
 ## OpenAPI generation
 
 Place the Asana OpenAPI spec at `priv/openapi/asana.yaml`, then run:
