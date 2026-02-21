@@ -105,7 +105,7 @@ defmodule Asana.Connection do
 
   defp normalize_query_value(value), do: value
 
-  defp normalize_query_item(item) when is_map(item) or is_list(item), do: Poison.encode!(item)
+  defp normalize_query_item(item) when is_map(item) or is_list(item), do: JSON.encode!(item)
   defp normalize_query_item(item), do: to_string(item)
 
   defp maybe_put_body(options, nil, _form, _multipart), do: options
@@ -146,7 +146,7 @@ defmodule Asana.Connection do
   end
 
   defp encode_form_value(value) when is_binary(value), do: value
-  defp encode_form_value(value) when is_map(value) or is_list(value), do: Poison.encode!(value)
+  defp encode_form_value(value) when is_map(value) or is_list(value), do: JSON.encode!(value)
   defp encode_form_value(value), do: to_string(value)
 
   defp multipart_boundary do

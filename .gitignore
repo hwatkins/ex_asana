@@ -21,3 +21,7 @@ erl_crash.dump
 
 # Hex package artifacts (built via "mix hex.build").
 asana-*.tar
+
+# OpenAPI spec and derived artifacts (for code generation).
+asana_oas.yaml
+asana_oas_flat.json
