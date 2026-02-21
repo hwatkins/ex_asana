@@ -38,6 +38,11 @@ jobs:
           MIX_ENV: test
         run: mix test
 
+      - name: Install dependencies for docs/publish
+        env:
+          MIX_ENV: dev
+        run: mix deps.get
+
       - name: Verify tag matches mix.exs version
         if: startsWith(github.ref, 'refs/tags/v')
         env:
@@ -66,5 +71,5 @@ jobs:
       - name: Publish package to Hex.pm
         env:
           HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
-          MIX_ENV: prod
+          MIX_ENV: dev
         run: mix hex.publish --yes
