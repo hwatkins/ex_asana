@@ -18,6 +18,11 @@ erl_crash.dump
 
 # Ignore package tarball (built via "mix hex.build").
 asana_ex-*.tar
+ex_asana-*.tar
+
+# Dialyzer PLTs are machine/OS specific and must not be committed.
+priv/plts/*
+!priv/plts/.gitkeep
 
 # Temporary files, for example, from tests.
 /tmp/
