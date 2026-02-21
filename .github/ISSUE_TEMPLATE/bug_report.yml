@@ -1,0 +1,50 @@
+name: Bug report
+description: Report a reproducible bug
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please include a minimal reproduction.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe expected vs actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Steps or code to reproduce.
+    validations:
+      required: true
+  - type: input
+    id: ex_asana_version
+    attributes:
+      label: ex_asana version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: elixir_version
+    attributes:
+      label: Elixir version
+      placeholder: "1.18.x"
+    validations:
+      required: true
+  - type: input
+    id: otp_version
+    attributes:
+      label: OTP version
+      placeholder: "27.x"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / stacktrace
+      render: shell
